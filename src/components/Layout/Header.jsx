@@ -48,7 +48,7 @@ export function Header() {
           }} className="w-8 h-8 rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-lg">👑</span>
             </motion.div>
-            <span className="text-xl font-bold text-gray-900">Palo Glow</span>
+            <span className="text-xl font-bold text-gray-900">PaloGlow</span>
           </Link>
 
           {/* Desktop Navigation */}

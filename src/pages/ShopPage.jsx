@@ -11,7 +11,7 @@ export function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid');
-  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [priceRange, setPriceRange] = useState([0, 20000]);
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products;
@@ -128,7 +128,7 @@ export function ShopPage() {
                   <input
                     type="range"
                     min="0"
-                    max="10000"
+                    max="20000"
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
@@ -144,7 +144,7 @@ export function ShopPage() {
                     <input
                       type="number"
                       value={priceRange[1]}
-                      onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 10000])}
+                      onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 20000])}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                       placeholder="Max"
                     />
@@ -263,7 +263,7 @@ export function ShopPage() {
                   <Button
                     onClick={() => {
                       setSelectedCategory('all');
-                      setPriceRange([0, 10000]);
+                      setPriceRange([0, 20000]);
                       setSortBy('featured');
                     }}
                     variant="outline"

@@ -6,9 +6,19 @@ import { toast } from '@/components/ui/use-toast';
 
 export function Footer() {
   const handleSocialClick = (platform) => {
-    toast({
-      title: `🚧 ${platform} integration isn't implemented yet—but don't worry! Esta funcionalidad está en desarrollo!`
-    });
+    switch(platform) {
+      case 'Facebook':
+        window.open('https://www.facebook.com/paloglow', '_blank');
+        break;
+      case 'Instagram':
+        window.open('https://www.instagram.com/paloglow', '_blank');
+        break;
+      case 'Twitter':
+        window.open('https://www.twitter.com/paloglow', '_blank');
+        break;
+      default:
+        break;
+    }
   };
 
   const handleNewsletterSubmit = (e) => {
@@ -121,15 +131,15 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-2 text-sm text-gray-300">
                 <Mail className="h-4 w-4" />
-                <span>info@paloglow.com.ar</span>
+                <span>palomaa06@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-300">
                 <Phone className="h-4 w-4" />
-                <span>(011) 60428780</span>
+                <span>(011) 32801394</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-300">
                 <MapPin className="h-4 w-4" />
-                <span>Bolívar 3874, José Mármol</span>
+                <span>José Mármol</span>
               </div>
             </div>
             
@@ -155,20 +165,20 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2024 Palo Glow. All rights reserved.
+            © 2025 Palo Glow. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
             <button 
               onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
               className="text-gray-400 hover:text-amber-400 text-sm transition-colors"
             >
-              Privacy Policy
+              Política de Privacidad
             </button>
             <button 
               onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
               className="text-gray-400 hover:text-amber-400 text-sm transition-colors"
             >
-              Terms of Service
+              Términos de Servicio
             </button>
           </div>
         </div>

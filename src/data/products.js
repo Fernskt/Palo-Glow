@@ -1,18 +1,18 @@
 export const products = [
   {
     id: 1,
-    name: "Pearl Pendant Necklace • 18k Gold Plated",
-    price: 3400.99,
-    originalPrice: 4200.99,
-    category: "necklaces",
+    name: "Esclava Mariposa Strass",
+    price: 12000,
+    originalPrice: 15000,
+    category: "esclavas",
     description:
-      "Collar minimalista con perla cultivada y cadena bañada en oro 18k. Ligero, hipoalergénico y perfecto para usar todos los días o en capas.",
+      "Esclava rígida con diseño de mariposa y strass. Un toque delicado y femenino para cualquier look.",
     features: [
-      "Acero quirúrgico 316L con baño de oro 18k",
-      "Perla cultivada grado AAA",
-      "Hipoalergénico, libre de níquel",
-      "Cierre seguro tipo lobster",
-      "Longitud 45 cm + 5 cm de extensión"
+      "Acero quirúrgico 316L con baño dorado",
+      "Strass de alta calidad",
+      "Hipoalergénica",
+      "No se oxida ni pierde el color",
+      "Ajustable a diferentes tamaños de muñeca"
     ],
     images: [
       "Producto1.jpeg"
@@ -21,18 +21,18 @@ export const products = [
     featured: true,
     rating: 4.9,
     reviews: 187,
-    weight: "45+5 cm",
-    ingredients: "18k gold plated stainless steel, cultured pearl"
+    weight: "10 cm",
+    ingredients: "Acero Quirúrgico 316L, strass"
   },
   {
     id: 2,
-    name: "Twisted Rope Bracelet • 18k Gold Plated",
-    price: 2700.99,
-    category: "bracelets",
+    name: "Esclava Hermes strass ",
+    price: 12000,
+    category: "esclavas",
     description:
-      "Pulsera trenzada estilo rope con brillo sutil y terminación pulido espejo. Ideal para combinar con reloj o bangles.",
+      "Esclava rígida con diseño Hermes y strass. Un toque delicado y femenino para cualquier look.",
     features: [
-      "Baño de oro 18k triple capa",
+      "Acero dorado macizo",
       "Cadena rope 3 mm de grosor",
       "Resistente al uso diario",
       "Hipoalergénico",
@@ -50,20 +50,20 @@ export const products = [
   },
   {
     id: 3,
-    name: "Classic Hoop Earrings • 25 mm",
-    price: 2200.99,
-    category: "earrings",
+    name: "Pulsera trebol Negro strass ",
+    price: 10000,
+    category: "bracelets",
     description:
-      "Aros argolla livianos con cierre seguro. Un básico atemporal para todos los días.",
+      "Pulsera Acero dorado con estilo trebol.",
     features: [
-      "Acero quirúrgico 316L",
-      "Baño de oro 18k resistente",
+      "Acero Dorado",
+      "Baño dorado resistente",
       "Peso ultraliviano",
       "Cierre click seguro",
       "Diámetro 25 mm, grosor 2 mm"
     ],
     images: [
-      "Producto3.jpeg"
+      "Producto5.jpeg"
     ],
     inStock: true,
     featured: false,
@@ -74,23 +74,24 @@ export const products = [
   },
   {
     id: 4,
-    name: "Adjustable Signet Ring • Mirror Finish",
-    price: 2400.99,
-    category: "rings",
+    name: "Esclava dorada apliques",
+    price: 12000,
+    category: "esclavas",
     description:
-      "Anillo sello ajustable con terminación pulido espejo. Cómodo, hipoalergénico y fácil de combinar.",
+      "Esclava dorada con apliques decorativos, ideal para realzar cualquier conjunto con un toque sofisticado.",
     features: [
-      "Ajustable de talla 6 a 9",
-      "Pulido espejo anti-rayas",
-      "Libre de níquel",
-      "No pierde el color con uso habitual",
-      "Ideal para mix & match"
+      "Acero quirurgico dorado",
+      "Apliques decorativos de diseño exclusivo",
+      "Hipoalergénica y resistente al agua",
+      "Ajustable a diferentes tamaños de muñeca",
+      "No pierde el color ni se oxida"
     ],
     images: [
-      "Producto4.jpeg"
+      "Producto4.jpeg",
+      "Producto10.jpeg"
     ],
     inStock: true,
-    featured: false,
+    featured: true,
     rating: 4.6,
     reviews: 98,
     weight: "Talla 6–9 ajustable",
@@ -98,23 +99,23 @@ export const products = [
   },
   {
     id: 5,
-    name: "Layered Chains Set • 2 Necklaces",
-    price: 4400.99,
-    category: "sets",
+    name: "Esclava Hermes blanca",
+    price: 12000,
+    category: "esclavas",
     description:
-      "Set de dos cadenas: una tipo paperclip y otra snake fina. Pensado para lograr un layering equilibrado sin esfuerzo.",
+      "Esclava Acero Dorado Macizo con logo estilo Hermes.",
     features: [
-      "Incluye 2 collares (paperclip 45 cm, snake 40 cm)",
-      "Cierres independientes para usar juntos o separados",
-      "Baño de oro 18k triple capa",
+      "Esclava Acero Dorado Macizo",
+      "Cierres clips",
+      "Baño dorado resistente",
       "Libre de níquel y plomo",
-      "No se enreda fácilmente"
+      "resistente al uso diario"
     ],
     images: [
-      "Producto5.jpeg"
+      "Producto3.jpeg"
     ],
     inStock: true,
-    featured: true,
+    featured: false,
     rating: 4.9,
     reviews: 212,
     weight: "40 cm + 45 cm (cada uno con 5 cm de extensión)",
@@ -122,20 +123,20 @@ export const products = [
   },
   {
     id: 6,
-    name: "Pearl & Chain Bracelet",
-    price: 2900.99,
+    name: "Pulsera trebol dorado strass",
+    price: 10000,
     category: "bracelets",
     description:
-      "Pulsera híbrida: mitad cadena dorada, mitad perlas cultivadas. Contraste moderno con toque clásico.",
+      "Pulsera trebol blanca y dorada con apliques strass. Contraste moderno con toque clásico.",
     features: [
-      "Perlas cultivadas grado AAA (6–7 mm)",
-      "Cadena curb dorada",
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
       "Hipoalergénica",
       "Cierre lobster y extensión",
-      "Hecha en tandas pequeñas"
     ],
     images: [
-      "Producto6.jpeg"
+      "Producto6.jpeg",
+      "Producto7.jpeg"
     ],
     inStock: true,
     featured: false,
@@ -146,12 +147,12 @@ export const products = [
   },
   {
     id: 7,
-    name: "Minimalist Bar Necklace • 18k Gold Plated",
-    price: 3200.99,
-    originalPrice: 3900.99,
-    category: "necklaces",
+    name: "Pulsera trébol dorada",
+    price: 10000,
+    originalPrice: 12000,
+    category: "bracelets",
     description:
-      "Collar delicado con barra horizontal y cadena fina. Perfecto para usar solo o en capas con otros collares.",
+      "Pulsera trébol dorada con barra ancha. Un diseño moderno y elegante para cualquier ocasión.",
     features: [
       "Acero quirúrgico 316L con baño de oro 18k",
       "Barra de 30 mm de ancho",
@@ -160,7 +161,8 @@ export const products = [
       "Longitud 42 cm + 5 cm de extensión"
     ],
     images: [
-      "Producto7.jpeg"
+      "Producto11.jpeg",
+      "Producto10.jpeg"
     ],
     inStock: true,
     featured: false,
@@ -171,17 +173,16 @@ export const products = [
   },
   {
     id: 8,
-    name: "Stackable Rings Set • 3 Gold Bands",
-    price: 2600.99,
-    category: "sets",
+    name: "Pulsera trébol combinada",
+    price: 10000,
+    category: "bracelets",
     description:
-      "Set de tres anillos finos apilables con diferentes texturas: liso, martillado y trenzado. Versátiles y cómodos.",
+      "Pulsera trébol combinadas en color rojo y negro. Versátiles y modernas.",
     features: [
-      "Tallas 6, 7 y 8 (pueden usarse juntas o separadas)",
-      "Baño de oro 18k resistente",
-      "Hipoalergénicos, libres de níquel",
-      "No pierden el color con uso habitual",
-      "Ideales para mix & match"
+      "Acero quirúrgico 316L con baño dorado",
+      "Trébol esmaltado en colores combinados",
+      "Hipoalergénica y resistente al agua",
+      "Cierre seguro y ajuste cómodo"
     ],
     images: [
       "Producto8.jpeg"
@@ -191,21 +192,20 @@ export const products = [
     rating: 4.7,
     reviews: 134,
     weight: "Tallas 6, 7 y 8",
-    ingredients: "18k gold plated stainless steel"
+    ingredients: "acero quirúrgico 316L con baño dorado"
   },
   {
     id: 9,
-    name: "Huggie Hoop Earrings • 12 mm",
-    price: 1900.99,
-    category: "earrings",
+    name: "Pulsera trébol verde",
+    price: 10000,
+    category: "bracelets",
     description:
-      "Aros huggie pequeños y livianos con cierre seguro. Un básico atemporal para todos los días.",
+      "Pulsera trébol verde con apliques strass. Contraste moderno con toque clásico.",
     features: [
-      "Acero quirúrgico 316L",
-      "Baño de oro 18k resistente",
-      "Peso ultraliviano",
-      "Cierre click seguro",
-      "Diámetro 12 mm, grosor 2 mm"
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
     ],
     images: [
       "Producto9.jpeg"
@@ -215,7 +215,147 @@ export const products = [
     rating: 4.8,
     reviews: 178,
     weight: "Ø 12 mm",
-    ingredients: "18k gold plated stainless steel"
+    ingredients: "acero quirúrgico 316L con baño dorado"
+  },
+  {
+    id: 10,
+    name: "Pulsera acero dorado",
+    price: 4000,
+    originalPrice: 6000,
+    category: "bracelets",
+    description:
+      "Pulsera acero dorado. Contraste moderno con toque clásico.",
+    features: [
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
+    ],
+    images: [
+      "Producto15.jpeg"
+    ],
+    inStock: true,
+    featured: false,
+    rating: 4.8,
+    reviews: 178,
+    weight: "Ø 12 mm",
+    ingredients: "acero quirúrgico 316L con baño dorado"
+  },
+  {
+    id: 11,
+    name: "Anillo colibrí strass",
+    price: 7000,
+    category: "rings",
+    description:
+      "Anillo colibrí con strass. Contraste moderno con toque clásico.",
+    features: [
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
+    ],
+    images: [
+      "Producto16.jpeg"
+    ],
+    inStock: true,
+    featured: false,
+    rating: 4.8,
+    reviews: 178,
+    weight: "Ø 12 mm",
+    ingredients: "acero quirúrgico 316L con baño dorado"
+  },
+  {
+    id: 12,
+    name: "Pulsera trébol combinada dorada strass",
+    price: 10000,
+    category: "bracelets",
+    description:
+      "Pulsera trébol combinada dorada con apliques strass. Contraste moderno con toque clásico.",
+    features: [
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
+    ],
+    images: [
+      "Producto12.jpeg",
+      "Producto10.jpeg"
+    ],
+    inStock: true,
+    featured: false,
+    rating: 4.8,
+    reviews: 178,
+    weight: "Ø 12 mm",
+    ingredients: "acero quirúrgico 316L con baño dorado"
+  },
+  {
+    id: 13,
+    name: "Esclava clavo plateada",
+    price: 12000,
+    category: "esclavas",
+    description:
+      "Esclava clavo plateada con apliques strass. Contraste moderno con toque clásico.",
+    features: [
+      "Acero quirúrgico 316L con baño plateado",
+      "Alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
+    ],
+    images: [
+      "Producto13.jpeg"
+    ],
+    inStock: true,
+    featured: false,
+    rating: 4.8,
+    reviews: 178,
+    weight: "Ø 12 mm",
+    ingredients: "acero quirúrgico 316L"
+  },
+  {
+    id: 14,
+    name: "Esclava clavo dorada",
+    price: 12000,
+    category: "esclavas",
+    description:
+      "Esclava clavo dorada con apliques strass. Contraste moderno con toque clásico.",
+    features: [
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
+    ],
+    images: [
+      "Producto14.jpeg"
+    ],
+    inStock: true,
+    featured: false,
+    rating: 4.8,
+    reviews: 178,
+    weight: "Ø 12 mm",
+    ingredients: "acero quirúrgico 316L con baño dorado"
+  },
+  {
+    id: 15,
+    name: "Anillo piedra colores",
+    price: 5000,
+    category: "rings",
+    description:
+      "Anillo piedra colores con apliques strass. Contraste moderno con toque clásico.",
+    features: [
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
+    ],
+    images: [
+      "Producto17.jpeg"
+    ],
+    inStock: true,
+    featured: false,
+    rating: 4.8,
+    reviews: 178,
+    weight: "Ø 12 mm",
+    ingredients: "acero quirúrgico 316L con baño dorado"
   }
 
 ];
@@ -223,7 +363,8 @@ export const products = [
 export const categories = [
   { id: 'all', name: 'Todos los productos', count: products.length },
   { id: 'necklaces', name: 'Collares', count: products.filter(p => p.category === 'necklaces').length },
-  { id: 'bracelets', name: 'Pulceras', count: products.filter(p => p.category === 'bracelets').length },
+  { id: 'esclavas', name: 'esclavas', count: products.filter(p => p.category === 'esclavas').length },
+  { id: 'bracelets', name: 'Pulseras', count: products.filter(p => p.category === 'bracelets').length },
   { id: 'rings', name: 'Anillos', count: products.filter(p => p.category === 'rings').length },
   { id: 'earrings', name: 'Aros', count: products.filter(p => p.category === 'earrings').length },
   { id: 'sets', name: 'Sets', count: products.filter(p => p.category === 'sets').length }
