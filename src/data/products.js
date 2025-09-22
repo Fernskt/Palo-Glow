@@ -356,6 +356,29 @@ export const products = [
     reviews: 178,
     weight: "Ø 12 mm",
     ingredients: "acero quirúrgico 316L con baño dorado"
+  },
+  {
+    id: 16,
+    name: "Aros piedra multicolor",
+    price: 4000,
+    category: "earrings",
+    description:
+      "Aros piedra multicolor con apliques strass. Contraste moderno con toque clásico.",
+    features: [
+      "Acero quirúrgico 316L con baño dorado",
+      "apliques strass de alta calidad",
+      "Hipoalergénica",
+      "Cierre lobster y extensión",
+    ],
+    images: [
+      "Producto18.jpeg"
+    ],
+    inStock: true,
+    featured: false,
+    rating: 4.8,
+    reviews: 178,
+    weight: "Ø 12 mm",
+    ingredients: "acero quirúrgico 316L con baño dorado"
   }
 
 ];
@@ -367,6 +390,7 @@ export const categories = [
   { id: 'bracelets', name: 'Pulseras', count: products.filter(p => p.category === 'bracelets').length },
   { id: 'rings', name: 'Anillos', count: products.filter(p => p.category === 'rings').length },
   { id: 'earrings', name: 'Aros', count: products.filter(p => p.category === 'earrings').length },
+  { id: 'piercing', name: 'Piercing', count: products.filter(p => p.category === 'Piercing').length },
   { id: 'sets', name: 'Sets', count: products.filter(p => p.category === 'sets').length }
 ];
 
