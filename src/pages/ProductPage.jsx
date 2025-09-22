@@ -20,6 +20,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { products } from '@/data/products';
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/components/ui/use-toast';
+import { productImages } from '@/assets/productImages'; 
 
 export function ProductPage() {
   const { id } = useParams();
@@ -28,13 +29,19 @@ export function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const { addToCart, isInCart, getItemQuantity } = useCart();
 
+  const firstImgName = product.images?.[0];
+    const imgUrl =
+      (firstImgName && productImages[firstImgName]) ||
+      // fallback si alguna vez guardás rutas absolutas (p.ej. /Products/Producto1.jpeg en /public)
+      (typeof firstImgName === 'string' && firstImgName.startsWith('/') ? firstImgName : undefined);
+
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Producto no encontrado</h1>
           <Link to="/shop">
-            <Button>Back to Shop</Button>
+            <Button>Volver a tienda</Button>
           </Link>
         </div>
       </div>
@@ -84,9 +91,9 @@ export function ProductPage() {
   return (
     <>
       <Helmet>
-        <title>{product.name} | Golden Hive - Premium Honey & Beeswax Products</title>
+        <title>{product.name} | Palo Glow</title>
         <meta name="description" content={product.description} />
-        <meta property="og:title" content={`${product.name} | Golden Hive - Premium Honey & Beeswax Products`} />
+        <meta property="og:title" content={`${product.name} | Palo Glow`} />
         <meta property="og:description" content={product.description} />
       </Helmet>
 
@@ -118,7 +125,7 @@ export function ProductPage() {
                 <img  
                   className="w-full h-96 lg:h-[500px] object-cover"
                   alt={`${product.name} - Main product image`}
-                 src="https://images.unsplash.com/photo-1595872018818-97555653a011" />
+                 src={imgUrl} />
                 
                 {/* Image Navigation */}
                 {product.images.length > 1 && (

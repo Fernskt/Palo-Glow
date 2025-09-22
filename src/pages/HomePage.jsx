@@ -46,7 +46,7 @@ export function HomePage() {
     {
       icon: Truck,
       title: "Envío Rápido",
-      description: "Envíos a todo el país con seguimiento. Envío gratis desde ARS 5.000 y cambios simples."
+      description: "Envíos a todo el país con seguimiento. Envío gratis desde ARS 20.000 y cambios simples."
     },
     {
       icon: Heart,
@@ -82,7 +82,7 @@ export function HomePage() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium"
                   >
-                    👑​ elegancia que vibra.
+                    👑​ Viví a la moda.
                   </motion.div>
 
                   <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight text-shadow">
@@ -90,7 +90,7 @@ export function HomePage() {
                   </h1>
 
                   <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                    Descubre nuestra colección de joyas: collares, pulseras y accesorios únicos que realzan tu estilo y cuentan tu historia. Cada pieza está hecha con materiales de calidad, pensada para acompañarte en cada momento especial.
+                    Descubre nuestra colección de joyas: collares, pulseras y accesorios únicos que realzan tu estilo y cuentan tu historia. Cada pieza está pensada para acompañarte en cada momento especial.
                   </p>
                 </div>
 
@@ -282,12 +282,6 @@ export function HomePage() {
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 honey-gradient rounded-full mt-2 flex-shrink-0"></div>
                     <p className="text-gray-600">
-                      <strong>Local Partnerships:</strong> Working with local farmers to create diverse, healthy habitats for our bees.
-                    </p>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 honey-gradient rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-gray-600">
                       <strong>Calidad:</strong> Cada pieza es tratada con atención al detalle y materiales de calidad.
                     </p>
                   </div>
@@ -364,7 +358,7 @@ export function HomePage() {
                 Listo para brillar todos los días?
               </h2>
               <p className="text-xl text-white/90 leading-relaxed">
-                Sumate a la comunidad Palo Glow y sentí la diferencia: diseño consciente, y materiales de calidad. Envío gratis en compras desde ARS 5.000.
+                Sumate a la comunidad Palo Glow y sentí la diferencia: diseño consciente, y materiales de calidad. Envío gratis en compras desde ARS 20.000.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/shop">
