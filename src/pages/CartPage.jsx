@@ -16,7 +16,7 @@ export function CartPage() {
     getCartItemsCount
   } = useCart();
   const subtotal = getCartTotal();
-  const shipping = subtotal >= 50 ? 0 : 8.99;
+  const shipping = subtotal >= 20000 ? 0 : 2500;
   const tax = subtotal * 0.08; // 8% tax
   const total = subtotal + shipping + tax;
   const handleQuantityChange = (productId, newQuantity) => {
@@ -51,40 +51,40 @@ export function CartPage() {
   };
   if (cartItems.length === 0) {
     return <>
-        <Helmet>
-          <title>Shopping Cart | Golden Hive - Your cart is empty</title>
-          <meta name="description" content="Your shopping cart is currently empty. Browse our collection of premium honey and beeswax products to add items to your cart." />
-          <meta property="og:title" content="Shopping Cart | Golden Hive - Your cart is empty" />
-          <meta property="og:description" content="Your shopping cart is currently empty. Browse our collection of premium honey and beeswax products to add items to your cart." />
-        </Helmet>
+      <Helmet>
+        <title>Carrito | Palo Glow</title>
+        <meta name="description" content="Tu carrito de compras está vacío. Explora nuestra colección de productos premium de miel y cera de abeja para agregar artículos a tu carrito." />
+        <meta property="og:title" content="Carrito | Palo Glow - Tu carrito está vacío" />
+        <meta property="og:description" content="Tu carrito de compras está vacío. Explora nuestra colección de productos premium de miel y cera de abeja para agregar artículos a tu carrito." />
+      </Helmet>
 
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6
-        }} className="text-center max-w-md mx-auto px-4">
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <ShoppingBag className="h-12 w-12 text-amber-600" />
-              </div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                Your cart is empty
-              </h1>
-              <p className="text-gray-600 mb-8">
-                Looks like you haven't added any items to your cart yet. 
-                Start shopping to fill it up with our amazing products!
-              </p>
-              <Link to="/shop">
-                <Button className="honey-gradient text-white border-0 hover:opacity-90 w-full">Start Shopping</Button>
-              </Link>
-            </div>
-          </motion.div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <motion.div initial={{
+        opacity: 0,
+        y: 20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} transition={{
+        duration: 0.6
+      }} className="text-center max-w-md mx-auto px-4">
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <ShoppingBag className="h-12 w-12 text-amber-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          Tu carrito está vacío
+          </h1>
+          <p className="text-gray-600 mb-8">
+          Parece que aún no has agregado ningún artículo a tu carrito.
+          ¡Comienza a comprar para llenarlo con nuestros increíbles productos!
+          </p>
+          <Link to="/shop">
+          <Button className="honey-gradient text-white border-0 hover:opacity-90 w-full">Comenzar a comprar</Button>
+          </Link>
         </div>
+        </motion.div>
+      </div>
       </>;
   }
   return <>
@@ -102,16 +102,16 @@ export function CartPage() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                  Shopping Cart
+                  Carrito
                 </h1>
                 <p className="text-gray-600 mt-1">
-                  {getCartItemsCount()} {getCartItemsCount() === 1 ? 'item' : 'items'} in your cart
+                  {getCartItemsCount()} {getCartItemsCount() === 1 ? 'producto' : 'productos'} en tu carrito
                 </p>
               </div>
               <Link to="/shop">
                 <Button variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-50">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Continue Shopping
+                  Continuar comprando
                 </Button>
               </Link>
             </div>
@@ -125,9 +125,9 @@ export function CartPage() {
               <div className="bg-white rounded-lg shadow-sm">
                 <div className="p-6 border-b">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-lg font-semibold text-gray-900">Cart Items</h2>
+                    <h2 className="text-lg font-semibold text-gray-900">Productos en el carrito</h2>
                     <Button variant="ghost" size="sm" onClick={handleClearCart} className="text-red-600 hover:text-red-700 hover:bg-red-50">
-                      Clear Cart
+                      Limpiar Carrito
                     </Button>
                   </div>
                 </div>
@@ -146,7 +146,7 @@ export function CartPage() {
                         <div className="flex items-center gap-4">
                           {/* Product Image */}
                           <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                            <img className="w-full h-full object-cover" alt={`${item.name} in shopping cart`} src="https://images.unsplash.com/photo-1595872018818-97555653a011" />
+                            <img className="w-full h-full object-cover" alt={`${item.name} in shopping cart`} src={item.images[0]} />
                           </div>
 
                           {/* Product Info */}
@@ -208,7 +208,7 @@ export function CartPage() {
             }} transition={{
               duration: 0.6
             }} className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-6">Order Summary</h2>
+                <h2 className="text-lg font-semibold text-gray-900 mb-6">Resumen</h2>
 
                 <div className="space-y-4">
                   <div className="flex justify-between">
@@ -217,9 +217,9 @@ export function CartPage() {
                   </div>
 
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Shipping</span>
+                    <span className="text-gray-600">Envío</span>
                     <span className="font-medium">
-                      {shipping === 0 ? <span className="text-green-600">Free</span> : `$${shipping.toFixed(2)}`}
+                      {shipping === 0 ? <span className="text-green-600">Gratis</span> : `$${shipping.toFixed(2)}`}
                     </span>
                   </div>
 
@@ -242,13 +242,13 @@ export function CartPage() {
                   </div>
 
                   <Button onClick={handleCheckout} className="w-full honey-gradient text-white border-0 hover:opacity-90 text-lg py-3 mt-6">
-                    Proceed to Checkout
+                    Continuar al pago
                   </Button>
 
                   <div className="text-center text-sm text-gray-500 mt-4">
                     <div className="flex items-center justify-center gap-2">
                       <span>🔒</span>
-                      <span>Secure checkout guaranteed</span>
+                      <span>Seguridad garantizada</span>
                     </div>
                   </div>
                 </div>

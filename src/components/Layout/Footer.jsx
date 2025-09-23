@@ -176,7 +176,7 @@ export function Footer() {
               onClick={handleAutorClick}
               className="text-gray-400 hover:text-amber-400 text-sm transition-colors"
             >
-              Creado con ❤️ por Fernando Hasperué
+              Desarrollado por Fernando Hasperué
             </button>
             <Link to="/admin/products">Admin</Link>
           </div>

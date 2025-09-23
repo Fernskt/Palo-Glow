@@ -120,7 +120,7 @@ export default function AdminProductForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto py-8">
+    <div className="max-w-2xl mx-auto py-8 px-5">
       <h1 className="text-2xl font-semibold mb-4">Nuevo producto</h1>
 
       <form onSubmit={onSubmit} className="space-y-4">

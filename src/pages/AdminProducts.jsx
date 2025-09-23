@@ -20,6 +20,10 @@ export default function AdminProducts() {
     if (!error) setRows(data || [])
   }
 
+  const newProduct = () => {
+    navigate('/admin/new-product')
+  }
+
   useEffect(() => { load() }, [])
 
   const setBusyFor = (id, action) => setBusy((b) => ({ ...b, [id]: action }))
@@ -50,7 +54,7 @@ export default function AdminProducts() {
       await setProductFeatured(p.id, checked)
     } catch (e) {
       alert(e.message || 'No se pudo actualizar el destacado')
-      setRows(prev) // revertir
+      setRows(prev) 
     } finally {
       clearBusyFor(p.id)
     }
@@ -77,11 +81,11 @@ export default function AdminProducts() {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-semibold">Panel de Administrador</h1>
         <button
-          onClick={load}
+          onClick={newProduct}
           className="text-sm text-white honey-gradient px-3 py-2 border rounded hover:bg-gray-50"
           title="Refrescar"
         >
-          Refrescar
+          Agregar
         </button>
       </div>
 
