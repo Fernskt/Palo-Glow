@@ -24,9 +24,13 @@ export function Footer() {
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     toast({
-      title: "🚧 Newsletter signup isn't implemented yet—but don't worry! Esta funcionalidad está en desarrollo!"
+      title: "🚧 Esta funcionalidad está en desarrollo!"
     });
   };
+
+  const handleAutorClick = () => {
+    window.open('https://www.hasperue.com/', '_blank');
+  }
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -42,7 +46,7 @@ export function Footer() {
               >
                 <span className="text-white font-bold text-lg">👑</span>
               </motion.div>
-              <span className="text-xl font-bold">Palo Glow</span>
+              <span className="text-xl font-bold">PaloGlow</span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Colección de joyas: collares, pulseras y accesorios únicos que realzan tu estilo y cuentan tu historia. 
@@ -131,7 +135,7 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-2 text-sm text-gray-300">
                 <Mail className="h-4 w-4" />
-                <span>palomaa06@gmail.com</span>
+                <span>palomaagomez06@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-300">
                 <Phone className="h-4 w-4" />
@@ -169,17 +173,12 @@ export function Footer() {
           </p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
             <button 
-              onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
+              onClick={handleAutorClick}
               className="text-gray-400 hover:text-amber-400 text-sm transition-colors"
             >
-              Política de Privacidad
+              Creado con ❤️ por Fernando Hasperué
             </button>
-            <button 
-              onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
-              className="text-gray-400 hover:text-amber-400 text-sm transition-colors"
-            >
-              Términos de Servicio
-            </button>
+            <Link to="/admin/products">Admin</Link>
           </div>
         </div>
       </div>

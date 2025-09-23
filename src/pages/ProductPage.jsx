@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { 
-  Star, 
-  Heart, 
-  Share2, 
-  Truck, 
-  Shield, 
-  RotateCcw, 
-  Plus, 
+import {
+  Star,
+  Heart,
+  Share2,
+  Truck,
+  Shield,
+  RotateCcw,
+  Plus,
   Minus,
   ChevronLeft,
   ChevronRight
@@ -17,23 +17,32 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ProductCard } from '@/components/ProductCard';
-import { products } from '@/data/products';
+import { fetchProductById } from '@/data/catalog'
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/components/ui/use-toast';
-import { productImages } from '@/assets/productImages'; 
+import { productImages } from '@/assets/productImages';
 
 export function ProductPage() {
+
   const { id } = useParams();
-  const product = products.find(p => p.id === parseInt(id));
+  const [product, setProduct] = useState(null)
+  const [error, setError] = useState(null)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { addToCart, isInCart, getItemQuantity } = useCart();
 
-  const firstImgName = product.images?.[0];
-    const imgUrl =
-      (firstImgName && productImages[firstImgName]) ||
-      // fallback si alguna vez guardás rutas absolutas (p.ej. /Products/Producto1.jpeg en /public)
-      (typeof firstImgName === 'string' && firstImgName.startsWith('/') ? firstImgName : undefined);
+  useEffect(() => {
+    fetchProductById(id).then(setProduct).catch(e => setError(e.message))
+  }, [id])
+
+  if (error) {
+    return <div className="p-8 text-red-600">Error: {error}</div>
+  }
+  if (!product) {
+    return <div className="min-h-screen grid place-items-center">Cargando…</div>
+  }
+
+  const mainImg = product.images?.[selectedImageIndex] || product.images?.[0] || '';
 
   if (!product) {
     return (
@@ -48,11 +57,11 @@ export function ProductPage() {
     );
   }
 
-  const relatedProducts = products
+  /* const relatedProducts = products
     .filter(p => p.id !== product.id && p.category === product.category)
-    .slice(0, 3);
+    .slice(0, 3); */
 
-  const discountPercentage = product.originalPrice 
+  const discountPercentage = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
@@ -77,13 +86,13 @@ export function ProductPage() {
   };
 
   const nextImage = () => {
-    setSelectedImageIndex((prev) => 
+    setSelectedImageIndex((prev) =>
       prev === product.images.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
-    setSelectedImageIndex((prev) => 
+    setSelectedImageIndex((prev) =>
       prev === 0 ? product.images.length - 1 : prev - 1
     );
   };
@@ -104,7 +113,7 @@ export function ProductPage() {
             <nav className="flex items-center space-x-2 text-sm text-gray-600">
               <Link to="/" className="hover:text-amber-600">Home</Link>
               <span>/</span>
-              <Link to="/shop" className="hover:text-amber-600">Shop</Link>
+              <Link to="/shop" className="hover:text-amber-600">Tienda</Link>
               <span>/</span>
               <span className="text-gray-900">{product.name}</span>
             </nav>
@@ -122,11 +131,12 @@ export function ProductPage() {
             >
               {/* Main Image */}
               <div className="relative bg-white rounded-xl overflow-hidden shadow-lg">
-                <img  
+                <img
                   className="w-full h-96 lg:h-[500px] object-cover"
-                  alt={`${product.name} - Main product image`}
-                 src={imgUrl} />
-                
+                  alt={`${product.name} - imagen principal`}
+                  src={mainImg}
+                />
+
                 {/* Image Navigation */}
                 {product.images.length > 1 && (
                   <>
@@ -154,38 +164,32 @@ export function ProductPage() {
                   )}
                   {product.featured && (
                     <Badge className="honey-gradient text-white border-0">
-                      Featured
+                      Destacado
                     </Badge>
                   )}
                   {!product.inStock && (
                     <Badge variant="secondary" className="bg-gray-500 text-white">
-                      Out of Stock
+                      Sin stock
                     </Badge>
                   )}
                 </div>
               </div>
 
               {/* Thumbnail Images */}
-              {product.images.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
-                  {product.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImageIndex(index)}
-                      className={`relative bg-white rounded-lg overflow-hidden border-2 transition-colors ${
-                        selectedImageIndex === index
-                          ? 'border-amber-500'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                    >
-                      <img  
-                        className="w-full h-20 object-cover"
-                        alt={`${product.name} - Image ${index + 1}`}
-                       src="https://images.unsplash.com/photo-1595872018818-97555653a011" />
-                    </button>
-                  ))}
-                </div>
-              )}
+              {product.images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImageIndex(index)}
+                  className={`relative bg-white rounded-lg overflow-hidden border-2 transition-colors ${selectedImageIndex === index ? 'border-amber-500' : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                >
+                  <img
+                    className="w-full h-20 object-cover"
+                    alt={`${product.name} - imagen ${index + 1}`}
+                    src={image}
+                  />
+                </button>
+              ))}
             </motion.div>
 
             {/* Product Info */}
@@ -201,16 +205,15 @@ export function ProductPage() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-4 w-4 ${
-                        i < Math.floor(product.rating)
-                          ? 'text-amber-400 fill-current'
-                          : 'text-gray-300'
-                      }`}
+                      className={`h-4 w-4 ${i < Math.floor(product.rating)
+                        ? 'text-amber-400 fill-current'
+                        : 'text-gray-300'
+                        }`}
                     />
                   ))}
                 </div>
                 <span className="text-sm text-gray-600">
-                  {product.rating} ({product.reviews} reviews)
+                  {product.rating} ({product.reviews} vistas)
                 </span>
               </div>
 
@@ -244,7 +247,7 @@ export function ProductPage() {
               {/* Features */}
               {product.features && (
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-3">Key Features:</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3">Features:</h3>
                   <ul className="space-y-2">
                     {product.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-2">
@@ -258,14 +261,14 @@ export function ProductPage() {
 
               {/* Ingredients */}
               <div className="bg-amber-50 rounded-lg p-4">
-                <h3 className="font-semibold text-gray-900 mb-2">Ingredients:</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">Materiales:</h3>
                 <p className="text-sm text-gray-700">{product.ingredients}</p>
               </div>
 
               {/* Quantity and Add to Cart */}
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <span className="font-medium text-gray-900">Quantity:</span>
+                  <span className="font-medium text-gray-900">Cantidad:</span>
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -290,7 +293,7 @@ export function ProductPage() {
                   </div>
                   {isInCart(product.id) && (
                     <span className="text-sm text-amber-600">
-                      {getItemQuantity(product.id)} in cart
+                      {getItemQuantity(product.id)} en el carrito
                     </span>
                   )}
                 </div>
@@ -323,7 +326,7 @@ export function ProductPage() {
               </div>
 
               {/* Shipping Info */}
-              <div className="border-t pt-6 space-y-3">
+             {/*  <div className="border-t pt-6 space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <Truck className="h-5 w-5 text-amber-600" />
                   <span>Free shipping on orders over $50</span>
@@ -336,12 +339,12 @@ export function ProductPage() {
                   <Shield className="h-5 w-5 text-amber-600" />
                   <span>Secure checkout guaranteed</span>
                 </div>
-              </div>
+              </div> */}
             </motion.div>
           </div>
 
           {/* Related Products */}
-          {relatedProducts.length > 0 && (
+         {/*  {relatedProducts.length > 0 && (
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -362,7 +365,7 @@ export function ProductPage() {
                 ))}
               </div>
             </motion.section>
-          )}
+          )} */}
         </div>
       </div>
     </>
