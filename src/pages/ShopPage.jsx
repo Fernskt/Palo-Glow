@@ -1,20 +1,30 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Filter, Grid, List, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ProductCard';
-import { products, categories } from '@/data/products';
+//import { products, categories } from '@/data/products';
+import { useCatalog } from '@/data/catalog'
 import { toast } from '@/components/ui/use-toast';
 
 export function ShopPage() {
+  const { products, categories, featuredProducts, loading, error } = useCatalog();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid');
   const [priceRange, setPriceRange] = useState([0, 20000]);
+  const PAGE_SIZE = 6
+  const [currentPage, setCurrentPage] = useState(1)
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [products, selectedCategory, sortBy, priceRange])
+
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products;
+    let filtered = Array.isArray(products) ? [...products] : [];
+
 
     // Filter by category
     if (selectedCategory !== 'all') {
@@ -22,7 +32,7 @@ export function ShopPage() {
     }
 
     // Filter by price range
-    filtered = filtered.filter(product => 
+    filtered = filtered.filter(product =>
       product.price >= priceRange[0] && product.price <= priceRange[1]
     );
 
@@ -48,7 +58,14 @@ export function ShopPage() {
     }
 
     return filtered;
-  }, [selectedCategory, sortBy, priceRange]);
+  }, [products, selectedCategory, sortBy, priceRange]);
+
+  const total = filteredAndSortedProducts.length
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
+  const start = (currentPage - 1) * PAGE_SIZE
+  const end = Math.min(start + PAGE_SIZE, total)
+  const paginatedProducts = filteredAndSortedProducts.slice(start, end)
+
 
   const handleFilterClick = () => {
     toast({
@@ -59,10 +76,18 @@ export function ShopPage() {
   return (
     <>
       <Helmet>
-        <title>Palo Glow - Brillo sutil, impacto real | Detalles que iluminan</title>
-        <meta name="description" content="Browse our complete collection of artisanal honey, beeswax candles, and natural skincare products. Pure, ethically sourced, and crafted with care." />
-        <meta property="og:title" content="Palo Glow - Brillo sutil, impacto real | Detalles que iluminan" />
-        <meta property="og:description" content="Browse our complete collection of artisanal honey, beeswax candles, and natural skincare products. Pure, ethically sourced, and crafted with care." />
+        <title>Palo Glow | Nuestros Productos</title>
+        <meta name="description" content="Joyas para elevar tus outfits: collares, pulseras, anillos y aros hipoalergénicos en acero 316L bañados en oro 18k." />
+        <link rel="canonical" href="https://fernskt.github.io/Palo-Glow/" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Palo Glow",
+            url: "https://fernskt.github.io/Palo-Glow/",
+            sameAs: ["https://www.instagram.com/paloglow"]
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-gray-50">
@@ -102,11 +127,10 @@ export function ShopPage() {
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
-                      className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
-                        selectedCategory === category.id
-                          ? 'bg-amber-100 text-amber-800'
-                          : 'text-gray-600 hover:bg-gray-100'
-                      }`}
+                      className={`w-full text-left px-3 py-2 rounded-md transition-colors ${selectedCategory === category.id
+                        ? 'bg-amber-100 text-amber-800'
+                        : 'text-gray-600 hover:bg-gray-100'
+                        }`}
                     >
                       <div className="flex justify-between items-center">
                         <span>{category.name}</span>
@@ -153,7 +177,7 @@ export function ShopPage() {
               </div>
 
               {/* Additional Filters */}
-              <div className="bg-white rounded-lg p-6 shadow-sm">
+              {/* <div className="bg-white rounded-lg p-6 shadow-sm">
                 <Button
                   onClick={handleFilterClick}
                   variant="outline"
@@ -162,7 +186,7 @@ export function ShopPage() {
                   <SlidersHorizontal className="h-4 w-4 mr-2" />
                   Más Filtros
                 </Button>
-              </div>
+              </div> */}
             </motion.div>
 
             {/* Main Content */}
@@ -177,8 +201,9 @@ export function ShopPage() {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex items-center gap-4">
                     <span className="text-sm text-gray-600">
-                      Mostrando {filteredAndSortedProducts.length} de {products.length} productos
+                      Mostrando {total ? `${start + 1}–${end}` : 0} de {total} productos
                     </span>
+
                   </div>
 
                   <div className="flex items-center gap-4">
@@ -200,21 +225,19 @@ export function ShopPage() {
                     <div className="flex border border-gray-300 rounded-md overflow-hidden">
                       <button
                         onClick={() => setViewMode('grid')}
-                        className={`p-2 ${
-                          viewMode === 'grid'
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'text-gray-600 hover:bg-gray-100'
-                        }`}
+                        className={`p-2 ${viewMode === 'grid'
+                          ? 'bg-amber-100 text-amber-800'
+                          : 'text-gray-600 hover:bg-gray-100'
+                          }`}
                       >
                         <Grid className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => setViewMode('list')}
-                        className={`p-2 ${
-                          viewMode === 'list'
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'text-gray-600 hover:bg-gray-100'
-                        }`}
+                        className={`p-2 ${viewMode === 'list'
+                          ? 'bg-amber-100 text-amber-800'
+                          : 'text-gray-600 hover:bg-gray-100'
+                          }`}
                       >
                         <List className="h-4 w-4" />
                       </button>
@@ -223,28 +246,90 @@ export function ShopPage() {
                 </div>
               </motion.div>
 
+              {/* Loading */}
+              {loading && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-center py-12"
+                >
+                  <div className="loader mx-auto mb-4" />
+                  <span className="text-gray-600">Cargando productos...</span>
+                </motion.div>
+              )}
+
               {/* Products Grid */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className={`grid gap-6 ${
-                  viewMode === 'grid'
-                    ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
-                    : 'grid-cols-1'
-                }`}
+                className={`grid gap-6 ${viewMode === 'grid'
+                  ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+                  : 'grid-cols-1'
+                  }`}
               >
-                {filteredAndSortedProducts.map((product, index) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    index={index}
-                  />
+                {paginatedProducts.map((product, index) => (
+                  <ProductCard key={product.id} product={product} index={index} />
                 ))}
+
               </motion.div>
 
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-8 flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(1)}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                    aria-label="Primera página"
+                  >
+                    «
+                  </button>
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                    aria-label="Anterior"
+                  >
+                    ‹
+                  </button>
+
+                  {/* Números (simple: todas las páginas) */}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+                    <button
+                      key={n}
+                      onClick={() => setCurrentPage(n)}
+                      className={`px-3 py-1 border rounded ${n === currentPage ? 'bg-amber-100 border-amber-300 text-amber-800' : 'hover:bg-gray-100'
+                        }`}
+                      aria-current={n === currentPage ? 'page' : undefined}
+                    >
+                      {n}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                    aria-label="Siguiente"
+                  >
+                    ›
+                  </button>
+                  <button
+                    onClick={() => setCurrentPage(totalPages)}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                    aria-label="Última página"
+                  >
+                    »
+                  </button>
+                </div>
+              )}
+
+
               {/* No Results */}
-              {filteredAndSortedProducts.length === 0 && (
+              {(filteredAndSortedProducts.length === 0 && !loading) && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

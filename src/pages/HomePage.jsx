@@ -5,7 +5,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Star, Shield, Truck, Heart, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ProductCard';
-import { featuredProducts } from '@/data/products';
+//import { featuredProducts } from '@/data/products';
+import { useCatalog } from '@/data/catalog'
 import Joyeria from '@/assets/Joyería.png';
 import About from '@/assets/NosotrosJoyas.png';
 
@@ -24,10 +25,10 @@ export function HomePage() {
       location: "Buenos Aires, San José"
     },
     {
-      name: "María Fernanda López",
+      name: "Mónica Hasperué",
       rating: 5,
-      text: "Atención y envío rapidísimo. Compré un set de cadenas y quedan increíbles en capas.",
-      location: "La Plata"
+      text: "Nada me dió alergia. Excelente calidad. Súper recomendable.",
+      location: "José Mármol, Buenos Aires"
     }
   ];
 
@@ -55,14 +56,27 @@ export function HomePage() {
     }
   ];
 
+  const { featuredProducts, loading, error } = useCatalog();
+
+
   return (
     <>
       <Helmet>
-        <title>Palo Glow - Brillo sutil, impacto real | Detalles que iluminan</title>
-        <meta name="description" content="Discover pure, artisanal honey and beeswax products at Palo Glow. From wildflower honey to natural candles and skincare, experience the golden goodness of nature." />
-        <meta property="og:title" content="Palo Glow - Brillo sutil, impacto real | Natural Artisanal Quality" />
-        <meta property="og:description" content="Discover pure, artisanal honey and beeswax products at Palo Glow. From wildflower honey to natural candles and skincare, experience the golden goodness of nature." />
+        <title>Palo Glow | brillo que cuenta tu historia</title>
+        <meta name="description" content="Joyas para elevar tus outfits: collares, pulseras, anillos y aros hipoalergénicos en acero 316L bañados en oro 18k." />
+        <link rel="canonical" href="https://fernskt.github.io/Palo-Glow/" />
+        {/* JSON-LD Organization */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Palo Glow",
+            url: "https://fernskt.github.io/Palo-Glow/",
+            sameAs: ["https://www.instagram.com/paloglow"]
+          })}
+        </script>
       </Helmet>
+
 
       <div className="min-h-screen">
         {/* Hero Section */}
@@ -267,7 +281,7 @@ export function HomePage() {
                   <p className="text-lg text-gray-600 leading-relaxed">
                     Palo Glow es un emprendimiento que nace desde la moda, la feminidad y el deseo de elevar tus outfits con el complemento perfecto.
                     No fabricamos: curamos joyas y accesorios que se sienten actuales, combinables y cómodos —pulseras, anillos, aros y collares pensados para el día a día y para ocasiones especiales.
-                    Seleccionamos piezas hipoalergénicas y con buen acabado para que puedas mix & match, hacer layering y expresar tu estilo con confianza.
+                    Seleccionamos piezas hipoalergénicas para que puedas expresar tu estilo con confianza.
                     Creemos en el detalle y en la atención cercana: te ayudamos a armar sets, regalar con intención y sumar ese glow que transforma cualquier look.
                   </p>
                 </div>

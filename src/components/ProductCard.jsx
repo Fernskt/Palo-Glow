@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/components/ui/use-toast';
-import { productImages } from '@/assets/productImages'; 
+
 export function ProductCard({ product, index = 0 }) {
+
   const { addToCart, isInCart } = useCart();
 
   const handleAddToCart = (e) => {
@@ -32,10 +33,6 @@ export function ProductCard({ product, index = 0 }) {
 
   // --- Resolver imagen principal ---
   const firstImgName = product.images?.[0];
-  const imgUrl =
-    (firstImgName && productImages[firstImgName]) ||
-    // fallback si alguna vez guardás rutas absolutas (p.ej. /Products/Producto1.jpeg en /public)
-    (typeof firstImgName === 'string' && firstImgName.startsWith('/') ? firstImgName : undefined);
 
   return (
     <motion.div
@@ -48,9 +45,9 @@ export function ProductCard({ product, index = 0 }) {
         <div className="product-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
           {/* Image Container */}
           <div className="relative overflow-hidden bg-gray-50">
-            {imgUrl ? (
+            {firstImgName ? (
               <img
-                src={imgUrl}
+                src={firstImgName}
                 alt={product.name}
                 loading="lazy"
                 className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
