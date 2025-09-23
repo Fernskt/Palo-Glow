@@ -15,7 +15,7 @@ export default function AdminLogin() {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     setLoading(false)
     if (error) setError(error.message)
-    else nav('/admin/new-product')
+    else nav('/admin/products')
   }
 
   return (

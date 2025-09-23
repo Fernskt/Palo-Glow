@@ -151,7 +151,7 @@ export default function AdminProductEdit() {
   if (loading) return <div className="p-8 text-center">Cargando…</div>
 
   return (
-    <div className="max-w-2xl mx-auto py-8">
+    <div className="max-w-2xl mx-auto py-8 px-5">
       <h1 className="text-2xl font-semibold mb-1">Editar producto</h1>
       <p className="text-gray-500 mb-4">ID: {id}</p>
 

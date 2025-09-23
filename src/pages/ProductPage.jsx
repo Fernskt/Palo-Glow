@@ -304,7 +304,7 @@ export function ProductPage() {
                     disabled={!product.inStock}
                     className="flex-1 honey-gradient text-white border-0 hover:opacity-90 text-lg py-3"
                   >
-                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                    {product.inStock ? 'Agregar al carrito' : 'Sin stock'}
                   </Button>
                   <Button
                     variant="outline"
