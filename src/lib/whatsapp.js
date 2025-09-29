@@ -28,7 +28,7 @@ export function buildCartMessage({
   lines.push("");
   lines.push(`Subtotal: ${formatARS(subtotal)}`);
   if (shipping != null)
-    lines.push(`Envío: ${shipping === 0 ? "Gratis" : formatARS(shipping)}`);
+    lines.push(`Envío: ${shipping === 0 ? "A consultar" : formatARS(shipping)}`);
   if (tax) lines.push(`Impuestos: ${formatARS(tax)}`);
   lines.push(`*Total: ${formatARS(total)}*`);
   lines.push("");
