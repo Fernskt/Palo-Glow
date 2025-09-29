@@ -13,22 +13,22 @@ import About from '@/assets/NosotrosJoyas.png';
 export function HomePage() {
   const testimonials = [
     {
-      name: "Verónica Hasperué",
+      name: "Lucía Pérez",
       rating: 5,
       text: "La pulsera no ha perdido color y combina con todo. Amé el empaque reutilizable.",
       location: "Buenos Aires, José Mármol"
     },
     {
-      name: "Agustín Gómez",
+      name: "Martina García",
       rating: 5,
       text: "El anillo ajustable es hipoalergénico y cómodo. Detalle fino, cero níquel.",
-      location: "Buenos Aires, San José"
+      location: "Buenos Aires, Lanús"
     },
     {
-      name: "Mónica Hasperué",
+      name: "Sofía López",
       rating: 5,
       text: "Nada me dió alergia. Excelente calidad. Súper recomendable.",
-      location: "José Mármol, Buenos Aires"
+      location: "Buenos Aires, CABA"
     }
   ];
 
@@ -36,13 +36,13 @@ export function HomePage() {
   const features = [
     {
       icon: Shield,
-      title: "100% Libre de Níquel",
-      description: "Plata 925 e incrustaciones con baño de oro 18k hipoalergénicas, aptas para piel sensible."
+      title: "Hipoalergénico 316L",
+      description: "Acero quirúrgico 316L, cómodo y apto para piel sensible."
     },
     {
       icon: Award,
-      title: "Calidad Premium",
-      description: "Terminación a mano, pulido espejo, triple baño 18k y gemas AAA (zirconias/perlas cultivadas)."
+      title: "Buena calidad",
+      description: "Terminación pulido espejo, cierres seguros y brillo duradero. Apliques de strass de alta calidad."
     },
     {
       icon: Truck,
@@ -51,8 +51,8 @@ export function HomePage() {
     },
     {
       icon: Heart,
-      title: "Producción Ética",
-      description: "Materiales de origen responsable y packaging reciclable, en series pequeñas para minimizar residuos."
+      title: "Atención Personalizada",
+      description: "Asesoría por WhatsApp para armar tu look, elegir medidas y combinar piezas."
     }
   ];
 

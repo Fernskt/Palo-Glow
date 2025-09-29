@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
+import logo from '@/assets/paloGlowLogo1.png'
 
 export function Footer() {
   const handleSocialClick = (platform) => {
@@ -24,7 +25,7 @@ export function Footer() {
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     toast({
-      title: "🚧 Esta funcionalidad está en desarrollo!"
+      title: "Lo estamos trabajando ❤️"
     });
   };
 
@@ -44,9 +45,9 @@ export function Footer() {
                 transition={{ duration: 0.5 }}
                 className="w-8 h-8 rounded-full flex items-center justify-center"
               >
-                <span className="text-white font-bold text-lg">👑</span>
+                <span className="text-white font-bold text-lg"><img src={logo} alt="PaloGlow Logo" /></span>
               </motion.div>
-              <span className="text-xl font-bold">PaloGlow</span>
+              <span className="text-xl logo font-bold">PaloGlow</span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Colección de joyas: collares, pulseras y accesorios únicos que realzan tu estilo y cuentan tu historia. 
@@ -103,25 +104,25 @@ export function Footer() {
             <span className="text-lg font-semibold">Servicios</span>
             <nav className="flex flex-col space-y-2">
               <button 
-                onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
+                onClick={() => toast({ title: "Lo estamos trabajando ❤️" })}
                 className="text-gray-300 hover:text-amber-400 transition-colors text-sm text-left"
               >
                 Info de envíos
               </button>
               <button 
-                onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
+                onClick={() => toast({ title: "Lo estamos trabajando ❤️" })}
                 className="text-gray-300 hover:text-amber-400 transition-colors text-sm text-left"
               >
                 Cambios
               </button>
               <button 
-                onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
+                onClick={() => toast({ title: "Lo estamos trabajando ❤️" })}
                 className="text-gray-300 hover:text-amber-400 transition-colors text-sm text-left"
               >
                 FAQ
               </button>
               <button 
-                onClick={() => toast({ title: "🚧 Esta funcionalidad está en desarrollo!" })}
+                onClick={() => toast({ title: "Lo estamos trabajando ❤️" })}
                 className="text-gray-300 hover:text-amber-400 transition-colors text-sm text-left"
               >
                 Size Guide

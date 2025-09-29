@@ -69,7 +69,7 @@ export function ShopPage() {
 
   const handleFilterClick = () => {
     toast({
-      title: "🚧 Esta funcionalidad está en desarrollo!"
+      title: "Lo estamos trabajando ❤️"
     });
   };
 
