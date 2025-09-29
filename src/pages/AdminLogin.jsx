@@ -19,7 +19,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="max-w-sm mx-auto py-12">
+    <div className="max-w-sm mx-auto py-12 px-5">
       <h1 className="text-2xl font-semibold mb-4">Login</h1>
       <form onSubmit={onSubmit} className="space-y-3">
         <input className="w-full border p-2 rounded" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />

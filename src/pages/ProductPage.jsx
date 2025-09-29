@@ -21,6 +21,10 @@ import { fetchProductById } from '@/data/catalog'
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/components/ui/use-toast';
 import { productImages } from '@/assets/productImages';
+import { buildWhatsAppUrl, formatARS } from '@/lib/whatsapp'
+import { FaWhatsapp } from 'react-icons/fa';
+
+
 
 export function ProductPage() {
 
@@ -75,13 +79,13 @@ export function ProductPage() {
 
   const handleWishlistClick = () => {
     toast({
-      title: "🚧 Esta funcionalidad está en desarrollo!"
+      title: "Lo estamos trabajando ❤️"
     });
   };
 
   const handleShareClick = () => {
     toast({
-      title: "🚧 Esta funcionalidad está en desarrollo!"
+      title: "Lo estamos trabajando ❤️"
     });
   };
 
@@ -96,6 +100,14 @@ export function ProductPage() {
       prev === 0 ? product.images.length - 1 : prev - 1
     );
   };
+
+  const handleWhatsAppProduct = () => {
+    const text =
+      `Hola Palo! Me interesa *${product.name}* (${formatARS(product.price)})\n` +
+      // poné la URL de producto SIN protocolo para que no cuente como link
+      `Link: paloglow.shop/product/${product.id}`
+    window.open(buildWhatsAppUrl(text), '_blank')
+  }
 
   return (
     <>
@@ -309,11 +321,12 @@ export function ProductPage() {
                   <Button
                     variant="outline"
                     size="icon"
-                    onClick={handleWishlistClick}
+                    onClick={handleWhatsAppProduct}
                     className="border-amber-300 text-amber-700 hover:bg-amber-50"
                   >
-                    <Heart className="h-5 w-5" />
+                    <FaWhatsapp className="w-5 h-5" />
                   </Button>
+
                   <Button
                     variant="outline"
                     size="icon"
@@ -326,7 +339,7 @@ export function ProductPage() {
               </div>
 
               {/* Shipping Info */}
-             {/*  <div className="border-t pt-6 space-y-3">
+              {/*  <div className="border-t pt-6 space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <Truck className="h-5 w-5 text-amber-600" />
                   <span>Free shipping on orders over $50</span>
@@ -344,7 +357,7 @@ export function ProductPage() {
           </div>
 
           {/* Related Products */}
-         {/*  {relatedProducts.length > 0 && (
+          {/*  {relatedProducts.length > 0 && (
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

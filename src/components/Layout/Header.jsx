@@ -7,6 +7,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { useCart } from '@/hooks/useCart'
 import { toast } from '@/components/ui/use-toast'
 import { supabase } from '@/lib/supabaseClient'
+import logo from '@/assets/paloGlowLogo1.png'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -38,10 +39,10 @@ export function Header() {
   const isActive = (path) => location.pathname === path
 
   const handleWishlistClick = () => {
-    toast({ title: '🚧 Esta funcionalidad está en desarrollo!' })
+    toast({ title: 'Lo estamos trabajando ❤️' })
   }
   const handleSearchClick = () => {
-    toast({ title: '🚧 Esta funcionalidad está en desarrollo!' })
+    toast({ title: 'Lo estamos trabajando ❤️' })
   }
 
   return (
@@ -55,9 +56,9 @@ export function Header() {
               transition={{ duration: 0.5 }}
               className="w-8 h-8 rounded-full flex items-center justify-center"
             >
-              <span className="text-white font-bold text-lg">👑</span>
-            </motion.div>
-            <span className="text-xl font-bold text-gray-900">PaloGlow</span>
+              <span className="text-white font-bold text-lg"><img src={logo} alt="PaloGlow Logo" /></span>
+            </motion.div> 
+            <span className="text-xl font-bold text-gray-900 logo">PaloGlow</span>
           </Link>
 
           {/* Desktop Navigation */}

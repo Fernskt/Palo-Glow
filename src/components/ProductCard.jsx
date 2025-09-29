@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/components/ui/use-toast';
+import { buildWhatsAppUrl, formatARS } from '@/lib/whatsapp'
+import { FaWhatsapp } from 'react-icons/fa';
+
 
 export function ProductCard({ product, index = 0 }) {
 
@@ -24,15 +27,22 @@ export function ProductCard({ product, index = 0 }) {
   const handleWishlistClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toast({ title: '🚧 Esta funcionalidad está en desarrollo!' });
+    toast({ title: 'Lo estamos trabajando ❤️' });
   };
 
   const discountPercentage = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
-  // --- Resolver imagen principal ---
   const firstImgName = product.images?.[0];
+
+  const handleWhatsAppProduct = () => {
+    const text =
+      `Hola Palo! Me interesa *${product.name}* (${formatARS(product.price)})\n` +
+      // poné la URL de producto SIN protocolo para que no cuente como link
+      `Link: paloglow.shop/product/${product.id}`
+    window.open(buildWhatsAppUrl(text), '_blank')
+  }
 
   return (
     <motion.div
@@ -77,11 +87,10 @@ export function ProductCard({ product, index = 0 }) {
             <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <Button
                 size="icon"
-                variant="secondary"
-                className="h-8 w-8 bg-white/90 hover:bg-white shadow-md"
-                onClick={handleWishlistClick}
+                onClick={handleWhatsAppProduct}
+                className="text-amber-700 hover:text-amber-400 border-amber-300"
               >
-                <Heart className="h-4 w-4" />
+                <FaWhatsapp className="w-10 h-10" />
               </Button>
             </div>
 
@@ -105,9 +114,8 @@ export function ProductCard({ product, index = 0 }) {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-3 w-3 ${
-                    i < Math.floor(product.rating) ? 'text-amber-400 fill-current' : 'text-gray-300'
-                  }`}
+                  className={`h-3 w-3 ${i < Math.floor(product.rating) ? 'text-amber-400 fill-current' : 'text-gray-300'
+                    }`}
                 />
               ))}
               <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
