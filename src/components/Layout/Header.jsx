@@ -33,8 +33,8 @@ export function Header() {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Tienda', href: '/shop' },
-    { name: 'Nosotros', href: '/about' },
-    { name: 'Contacto', href: '/contact' }
+    /* { name: 'Nosotros', href: '/about' },
+    { name: 'Contacto', href: '/contact' } */
   ]
   const isActive = (path) => location.pathname === path
 

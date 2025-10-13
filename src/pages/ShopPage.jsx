@@ -13,7 +13,7 @@ export function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid');
-  const [priceRange, setPriceRange] = useState([0, 20000]);
+  const [priceRange, setPriceRange] = useState([0, 50000]);
   const PAGE_SIZE = 6
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -152,7 +152,7 @@ export function ShopPage() {
                   <input
                     type="range"
                     min="0"
-                    max="20000"
+                    max="50000"
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"

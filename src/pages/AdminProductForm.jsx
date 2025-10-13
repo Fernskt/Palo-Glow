@@ -142,6 +142,9 @@ export default function AdminProductForm() {
             <option value="rings">Anillos</option>
             <option value="earrings">Aros</option>
             <option value="necklaces">Collares</option>
+            <option value="piercing">Piercing</option>
+            <option value="briefcases">Carteras</option>
+            <option value="wallets">Billeteras</option>
             <option value="sets">Sets</option>
           </select>
         </div>

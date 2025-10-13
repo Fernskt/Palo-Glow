@@ -63,6 +63,8 @@ export function useCatalog({ category = 'all' } = {}) {
       'rings',
       'earrings',
       'piercing',
+      'briefcases',
+      'wallets',
       'sets'
     ]
     const counts = Object.fromEntries(
@@ -76,6 +78,8 @@ export function useCatalog({ category = 'all' } = {}) {
       { id: 'rings', name: 'Anillos', count: counts.rings },
       { id: 'earrings', name: 'Aros', count: counts.earrings },
       { id: 'piercing', name: 'Piercing', count: counts.piercing },
+      { id: 'briefcases', name: 'Carteras', count: counts.briefcases },
+      { id: 'wallets', name: 'Billeteras', count: counts.wallets },
       { id: 'sets', name: 'Sets', count: counts.sets },
     ]
   }, [products])
