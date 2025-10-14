@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ProductCard';
 //import { featuredProducts } from '@/data/products';
 import { useCatalog } from '@/data/catalog'
-import Joyeria from '@/assets/Joyería.png';
+import Joyeria from '@/assets/Joyería Madre.png';
 import About from '@/assets/NosotrosJoyas.png';
+import { Navigate } from 'react-router-dom';
 
 export function HomePage() {
+
   const testimonials = [
     {
       name: "Lucía Pérez",
@@ -147,8 +149,10 @@ export function HomePage() {
                 <div className="relative z-10">
                   <img
                     className="w-full h-auto rounded-2xl shadow-2xl animate-float"
-                    alt="Artisanal honey jars and beeswax products arranged beautifully"
-                    src={Joyeria} />
+                    alt="Joyería en exhibición"
+                    src={Joyeria}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => window.location.href = '/shop?esDiaDeLaMadre'} />
                 </div>
 
                 {/* Floating Elements */}
@@ -256,8 +260,8 @@ export function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
@@ -268,8 +272,8 @@ export function HomePage() {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
                 className="space-y-6"

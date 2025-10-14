@@ -7,6 +7,8 @@ import { ProductCard } from '@/components/ProductCard';
 //import { products, categories } from '@/data/products';
 import { useCatalog } from '@/data/catalog'
 import { toast } from '@/components/ui/use-toast';
+import { useLocation } from 'react-router-dom';
+
 
 export function ShopPage() {
   const { products, categories, featuredProducts, loading, error } = useCatalog();
@@ -15,15 +17,41 @@ export function ShopPage() {
   const [viewMode, setViewMode] = useState('grid');
   const [priceRange, setPriceRange] = useState([0, 50000]);
   const PAGE_SIZE = 6
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
+  // 1) Hooks de URL
+const location = useLocation();
+const isDiaDeLaMadre = useMemo(() => {
+  const sp = new URLSearchParams(location.search);
+  return sp.has('esDiaDeLaMadre');
+}, [location.search]);
+
+// 2) Aplicar precios con promo (20% OFF) si corresponde
+const pricedProducts = useMemo(() => {
+  if (!Array.isArray(products)) return [];
+  if (!isDiaDeLaMadre) return products;
+
+  return products.map(p => {
+    const orig = Number(p.price || 0);
+    const promo = Math.max(0, Math.round(orig * 0.8)); // 20% OFF
+    return {
+      ...p,
+      originalPrice: p.originalPrice ?? orig,
+      price: promo,
+      original_price: p.original_price ?? p.originalPrice ?? orig,
+    };
+  });
+}, [products, isDiaDeLaMadre]);
+
+
+
+  useEffect(() => { 
     setCurrentPage(1)
-  }, [products, selectedCategory, sortBy, priceRange])
+  }, [pricedProducts, selectedCategory, sortBy, priceRange])
 
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = Array.isArray(products) ? [...products] : [];
+    let filtered = Array.isArray(pricedProducts) ? [...pricedProducts] : [];
 
 
     // Filter by category
@@ -66,12 +94,6 @@ export function ShopPage() {
   const end = Math.min(start + PAGE_SIZE, total)
   const paginatedProducts = filteredAndSortedProducts.slice(start, end)
 
-
-  const handleFilterClick = () => {
-    toast({
-      title: "Lo estamos trabajando ❤️"
-    });
-  };
 
   return (
     <>
@@ -296,7 +318,7 @@ export function ShopPage() {
                   </button>
 
                   {/* Números (simple: todas las páginas) */}
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+                  {Array.from({ length: 5 }, (_, i) => i + 1).map(n => (
                     <button
                       key={n}
                       onClick={() => setCurrentPage(n)}

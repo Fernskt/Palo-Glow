@@ -39,8 +39,8 @@ export function CartPage() {
   const handleRemoveItem = (productId, productName) => {
     removeFromCart(productId);
     toast({
-      title: "Item removed",
-      description: `${productName} has been removed from your cart.`
+      title: "Producto eliminado",
+      description: `${productName} ha sido eliminado de su carrito.`
     });
   };
 
@@ -48,7 +48,7 @@ export function CartPage() {
     clearCart();
     toast({
       title: "Cart cleared",
-      description: "All items have been removed from your cart."
+      description: "Todos los productos fueron eliminados de su carrito."
     });
   };
 
