@@ -62,10 +62,11 @@ export function useCatalog({ category = 'all' } = {}) {
       'bracelets',
       'rings',
       'earrings',
-      'piercing',
       'briefcases',
       'wallets',
-      'sets'
+      'phoneholders',
+      'fannypacks',
+      'backpacks',
     ]
     const counts = Object.fromEntries(
       cats.map(c => [c, c === 'all' ? products.length : products.filter(p => p.category === c).length])
@@ -77,10 +78,11 @@ export function useCatalog({ category = 'all' } = {}) {
       { id: 'bracelets', name: 'Pulseras', count: counts.bracelets },
       { id: 'rings', name: 'Anillos', count: counts.rings },
       { id: 'earrings', name: 'Aros', count: counts.earrings },
-      { id: 'piercing', name: 'Piercing', count: counts.piercing },
       { id: 'briefcases', name: 'Carteras', count: counts.briefcases },
       { id: 'wallets', name: 'Billeteras', count: counts.wallets },
-      { id: 'sets', name: 'Sets', count: counts.sets },
+      { id: 'phoneholders', name: 'Porta celulares', count: counts.phoneholders },
+      { id: 'fannypacks', name: 'Riñoneras', count: counts.fannypacks },
+      { id: 'backpacks', name: 'Mochilas', count: counts.backpacks }
     ]
   }, [products])
 

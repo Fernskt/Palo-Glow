@@ -145,6 +145,9 @@ export default function AdminProductForm() {
             <option value="piercing">Piercing</option>
             <option value="briefcases">Carteras</option>
             <option value="wallets">Billeteras</option>
+            <option value="phoneholders">Porta celulares</option>
+            <option value="fannypacks">Riñoneras</option>
+            <option value="backpacks">Mochilas</option>
             <option value="sets">Sets</option>
           </select>
         </div>

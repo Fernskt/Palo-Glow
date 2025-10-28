@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ProductCard';
 //import { featuredProducts } from '@/data/products';
 import { useCatalog } from '@/data/catalog'
-import Joyeria from '@/assets/Joyería Madre.png';
+import Joyeria from '@/assets/Joyería.png';
 import About from '@/assets/NosotrosJoyas.png';
 import { Navigate } from 'react-router-dom';
 
@@ -151,8 +151,8 @@ export function HomePage() {
                     className="w-full h-auto rounded-2xl shadow-2xl animate-float"
                     alt="Joyería en exhibición"
                     src={Joyeria}
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => window.location.href = '/shop?esDiaDeLaMadre'} />
+                    /*style={{ cursor: 'pointer' }}
+                    onClick={() => window.location.href = '/shop?esDiaDeLaMadre'} */ />
                 </div>
 
                 {/* Floating Elements */}
