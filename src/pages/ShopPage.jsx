@@ -20,32 +20,32 @@ export function ShopPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // 1) Hooks de URL
-const location = useLocation();
-const isDiaDeLaMadre = useMemo(() => {
-  const sp = new URLSearchParams(location.search);
-  return sp.has('esDiaDeLaMadre');
-}, [location.search]);
+  const location = useLocation();
+  const isDiaDeLaMadre = useMemo(() => {
+    const sp = new URLSearchParams(location.search);
+    return sp.has('esDiaDeLaMadre');
+  }, [location.search]);
 
-// 2) Aplicar precios con promo (20% OFF) si corresponde
-const pricedProducts = useMemo(() => {
-  if (!Array.isArray(products)) return [];
-  if (!isDiaDeLaMadre) return products;
+  // 2) Aplicar precios con promo (20% OFF) si corresponde
+  const pricedProducts = useMemo(() => {
+    if (!Array.isArray(products)) return [];
+    if (!isDiaDeLaMadre) return products;
 
-  return products.map(p => {
-    const orig = Number(p.price || 0);
-    const promo = Math.max(0, Math.round(orig * 0.8)); // 20% OFF
-    return {
-      ...p,
-      originalPrice: p.originalPrice ?? orig,
-      price: promo,
-      original_price: p.original_price ?? p.originalPrice ?? orig,
-    };
-  });
-}, [products, isDiaDeLaMadre]);
+    return products.map(p => {
+      const orig = Number(p.price || 0);
+      const promo = Math.max(0, Math.round(orig * 0.8)); // 20% OFF
+      return {
+        ...p,
+        originalPrice: p.originalPrice ?? orig,
+        price: promo,
+        original_price: p.original_price ?? p.originalPrice ?? orig,
+      };
+    });
+  }, [products, isDiaDeLaMadre]);
 
 
 
-  useEffect(() => { 
+  useEffect(() => {
     setCurrentPage(1)
   }, [pricedProducts, selectedCategory, sortBy, priceRange])
 
@@ -98,19 +98,57 @@ const pricedProducts = useMemo(() => {
   return (
     <>
       <Helmet>
-        <title>Palo Glow | Nuestros Productos</title>
-        <meta name="description" content="Joyas para elevar tus outfits: collares, pulseras, anillos y aros hipoalergénicos en acero 316L bañados en oro 18k." />
-        <link rel="canonical" href="https://fernskt.github.io/Palo-Glow/" />
+        {/* Title */}
+        <title>Palo Glow | Tienda de Joyas y Accesorios</title>
+
+        {/* Meta Description */}
+        <meta
+          name="description"
+          content="Explorá la tienda oficial Palo Glow: joyas hipoalergénicas en acero quirúrgico 316L con pulido espejo, brillo duradero y accesorios como bolsos, carteras y riñoneras de eco-cuero."
+        />
+
+        {/* Canonical */}
+        <link rel="canonical" href="https://paloglow.shop/shop" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Palo Glow | Tienda Online" />
+        <meta
+          property="og:description"
+          content="Descubrí collares, anillos, aros y pulseras en acero quirúrgico 316L y accesorios en eco-cuero. Calidad real, brillo duradero y diseños modernos."
+        />
+        <meta property="og:url" content="https://paloglow.shop/shop" />
+        <meta property="og:image" content="https://paloglow.shop/og-cover.jpg" />
+
+        {/* JSON-LD Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Organization",
+            "@type": "Store",
             name: "Palo Glow",
-            url: "https://fernskt.github.io/Palo-Glow/",
-            sameAs: ["https://www.instagram.com/paloglow"]
+            url: "https://paloglow.shop/shop",
+            image: "https://paloglow.shop/og-cover.jpg",
+            description:
+              "Tienda oficial Palo Glow: joyas hipoalergénicas en acero quirúrgico 316L con pulido espejo, brillo duradero y accesorios en eco-cuero.",
+            sameAs: ["https://www.instagram.com/paloglow"],
+            department: [
+              {
+                "@type": "DepartmentStore",
+                name: "Joyas de acero 316L",
+                description:
+                  "Collares, anillos, aros y pulseras hipoalergénicos en acero quirúrgico 316L, con terminación pulido espejo y apliques de strass de alta calidad."
+              },
+              {
+                "@type": "DepartmentStore",
+                name: "Accesorios en eco-cuero",
+                description:
+                  "Bolsos, carteras y riñoneras modernas fabricadas en eco-cuero resistente y de excelente terminación."
+              }
+            ]
           })}
         </script>
       </Helmet>
+
 
       <div className="min-h-screen bg-gray-50">
         {/* Header */}

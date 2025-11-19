@@ -64,20 +64,47 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Palo Glow | brillo que cuenta tu historia</title>
-        <meta name="description" content="Joyas para elevar tus outfits: collares, pulseras, anillos y aros hipoalergénicos en acero 316L bañados en oro 18k." />
-        <link rel="canonical" href="https://fernskt.github.io/Palo-Glow/" />
-        {/* JSON-LD Organization */}
+        {/* Title */}
+        <title>Palo Glow | Joyas en acero quirúrgico 316L y accesorios de moda</title>
+
+        {/* Meta Description */}
+        <meta
+          name="description"
+          content="Joyas hipoalergénicas en acero quirúrgico 316L con pulido espejo, brillo duradero y cierres seguros. Collares, pulseras, anillos, aros y accesorios como bolsos y riñoneras en eco-cuero."
+        />
+
+        {/* Canonical */}
+        <link rel="canonical" href="https://paloglow.shop/" />
+
+        {/* JSON-LD Store */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Organization",
+            "@type": "Store",
             name: "Palo Glow",
-            url: "https://fernskt.github.io/Palo-Glow/",
-            sameAs: ["https://www.instagram.com/paloglow"]
+            url: "https://paloglow.shop/",
+            image: "https://paloglow.shop/og-cover.jpg",
+            description:
+              "Joyas hipoalergénicas en acero quirúrgico 316L con pulido espejo y accesorios de moda como bolsos, carteras y riñoneras.",
+            sameAs: ["https://www.instagram.com/paloglow"],
+            department: [
+              {
+                "@type": "DepartmentStore",
+                name: "Joyas de acero quirúrgico 316L",
+                description:
+                  "Collares, anillos, aros y pulseras hipoalergénicos con terminación espejo y apliques de strass de calidad."
+              },
+              {
+                "@type": "DepartmentStore",
+                name: "Accesorios en eco-cuero",
+                description:
+                  "Bolsos, carteras y riñoneras modernas, resistentes y de excelente terminación."
+              }
+            ]
           })}
         </script>
       </Helmet>
+
 
 
       <div className="min-h-screen">
