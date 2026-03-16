@@ -12,6 +12,7 @@ function mapRow(p) {
     features: Array.isArray(p.features) ? p.features : [],
     images: Array.isArray(p.images) ? p.images : [],
     inStock: !!p.in_stock,
+    stockQuantity: p.stock_quantity ?? null,
     featured: !!p.featured,
     rating: typeof p.rating === 'number' ? p.rating : 0,
     reviews: typeof p.reviews === 'number' ? p.reviews : 0,
@@ -67,6 +68,7 @@ export function useCatalog({ category = 'all' } = {}) {
       'phoneholders',
       'fannypacks',
       'backpacks',
+      'dresses',
     ]
     const counts = Object.fromEntries(
       cats.map(c => [c, c === 'all' ? products.length : products.filter(p => p.category === c).length])
@@ -82,7 +84,8 @@ export function useCatalog({ category = 'all' } = {}) {
       { id: 'wallets', name: 'Billeteras', count: counts.wallets },
       { id: 'phoneholders', name: 'Porta celulares', count: counts.phoneholders },
       { id: 'fannypacks', name: 'Riñoneras', count: counts.fannypacks },
-      { id: 'backpacks', name: 'Mochilas', count: counts.backpacks }
+      { id: 'backpacks', name: 'Mochilas', count: counts.backpacks },
+      { id: 'dresses', name: 'Vestidos', count: counts.dresses }
     ]
   }, [products])
 

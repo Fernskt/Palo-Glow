@@ -15,6 +15,7 @@ export function buildCartMessage({
   shipping,
   tax = 0,
   total,
+  shipmentInfo = null, // { codigoSeguimiento, costoEnvio, destinatario }
 }) {
   const lines = [];
   lines.push("*Pedido Palo Glow*");
@@ -27,8 +28,16 @@ export function buildCartMessage({
   });
   lines.push("");
   lines.push(`Subtotal: ${formatARS(subtotal)}`);
-  if (shipping != null)
+  if (shipmentInfo) {
+    lines.push(`Envío Correo Argentino: ${formatARS(shipmentInfo.costoEnvio ?? 0)}`);
+    lines.push(`N° seguimiento: *${shipmentInfo.codigoSeguimiento ?? shipmentInfo.numeroEnvio ?? '—'}*`);
+    if (shipmentInfo.destinatario) {
+      const d = shipmentInfo.destinatario;
+      lines.push(`Entregar a: ${d.nombre} ${d.apellido} — ${d.calle} ${d.numero}${d.piso ? ` ${d.piso}` : ''}, CP ${d.codigoPostal}, ${d.localidad}`);
+    }
+  } else if (shipping != null) {
     lines.push(`Envío: ${shipping === 0 ? "A consultar" : formatARS(shipping)}`);
+  }
   if (tax) lines.push(`Impuestos: ${formatARS(tax)}`);
   lines.push(`*Total: ${formatARS(total)}*`);
   lines.push("");

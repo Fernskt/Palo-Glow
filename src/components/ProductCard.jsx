@@ -134,10 +134,21 @@ export function ProductCard({ product, index = 0 }) {
                   <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
                 )}
               </div>
+              {product.stockQuantity != null && (
+                <p className={`text-xs mt-2 font-medium ${product.stockQuantity <= 5 ? 'text-red-500' : 'text-green-600'}`}>
+                  {product.stockQuantity === 0
+                    ? 'Sin stock'
+                    : product.stockQuantity <= 5
+                      ? `¡Solo quedan ${product.stockQuantity}!`
+                      : `Stock: ${product.stockQuantity} disponibles`}
+                </p>
+              )}
               <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
                 {product.weight}
               </span>
             </div>
+
+
           </div>
         </div>
       </Link>

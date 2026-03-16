@@ -11,7 +11,25 @@ export async function fetchProducts({ category='all' } = {}) {
     category: p.category, description: p.description,
     features: p.features ?? [], images: p.images ?? [],
     inStock: p.in_stock, featured: p.featured,
+    stockQuantity: p.stock_quantity ?? null,
     rating: Number(p.rating ?? 0), reviews: p.reviews ?? 0,
     weight: p.weight ?? null, ingredients: p.ingredients ?? null
   }))
+}
+
+/**
+ * Descuenta el stock de cada producto vendido.
+ * Requiere la función SQL `decrement_stock` creada en Supabase.
+ * Si el stock de un producto es NULL, lo ignora (sin límite).
+ */
+export async function decrementStock(items) {
+  const errors = []
+  for (const { id, quantity } of items) {
+    const { error } = await supabase.rpc('decrement_stock', {
+      product_id: id,
+      qty: quantity
+    })
+    if (error) errors.push(error)
+  }
+  if (errors.length) throw new Error('Error al actualizar el stock: ' + errors[0].message)
 }

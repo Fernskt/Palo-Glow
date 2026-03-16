@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/components/ui/use-toast';
-import { buildCartMessage, buildWhatsAppUrl } from '@/lib/whatsapp';
+import { decrementStock } from '@/services/products';
+import { ShippingForm } from '@/components/ShippingForm'
+import { useNavigate } from 'react-router-dom'
 
 
 export function CartPage() {
 
+  const navigate = useNavigate()
   const {
     cartItems,
     updateQuantity,
@@ -20,9 +23,13 @@ export function CartPage() {
     getCartItemsCount
   } = useCart();
   const subtotal = getCartTotal();
-  const shipping = 0;
-  const tax = subtotal * 0; // 8% tax
-  const total = subtotal + shipping + tax;
+  const tax = subtotal * 0;
+
+  const [showShipping, setShowShipping] = useState(false)
+  const [shipmentInfo, setShipmentInfo] = useState(null) // datos del envío creado
+
+  const costoEnvio = shipmentInfo?.costoEnvio ?? 0
+  const total = subtotal + costoEnvio + tax
 
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity < 1) {
@@ -47,26 +54,28 @@ export function CartPage() {
   const handleClearCart = () => {
     clearCart();
     toast({
-      title: "Cart cleared",
+      title: "Carrito vaciado",
       description: "Todos los productos fueron eliminados de su carrito."
     });
   };
 
   const handleCheckout = () => {
-    const items = cartItems.map(ci => ({
-      name: ci.name,
-      quantity: ci.quantity,
-      price: ci.price
-    }))
-    const text = buildCartMessage({
-      items,
-      subtotal,
-      shipping,
-      tax,
-      total
+    navigate('/checkout', {
+      state: {
+        cartItems,
+        subtotal,
+        costoEnvio,
+        total,
+        tax,
+        shipmentInfo,
+      }
     })
-    const url = buildWhatsAppUrl(text)
-    window.open(url, '_blank')
+  }
+
+  const handleShipmentCreated = (result) => {
+    setShipmentInfo(result)
+    setShowShipping(false)
+    toast({ title: '¡Envío generado!', description: `N° seguimiento: ${result.codigoSeguimiento ?? result.numeroEnvio ?? 'OK'}` })
   }
 
   if (cartItems.length === 0) {
@@ -245,20 +254,18 @@ export function CartPage() {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Envío</span>
                   <span className="font-medium">
-                    {shipping === 0 ? <span className="text-green-600">A consultar</span> : `$${shipping.toFixed(2)}`}
+                    {shipmentInfo
+                      ? <span className="text-gray-900">${costoEnvio.toFixed(2)}</span>
+                      : <button onClick={() => setShowShipping(true)} className="text-amber-600 underline text-sm">Calcular envío</button>}
                   </span>
                 </div>
 
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Tax</span>
-                  <span className="font-medium">${tax.toFixed(2)}</span>
-                </div>
-
-                {subtotal < 50 && <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                  <p className="text-sm text-amber-800">
-                    Add ${(50 - subtotal).toFixed(2)} more for free shipping!
-                  </p>
-                </div>}
+                {shipmentInfo && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-xs text-green-800">
+                    ✓ Envío generado · N° <span className="font-mono">{shipmentInfo.codigoSeguimiento ?? shipmentInfo.numeroEnvio}</span>
+                    <button onClick={() => setShowShipping(true)} className="ml-2 underline">ver</button>
+                  </div>
+                )}
 
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-semibold">
@@ -267,8 +274,15 @@ export function CartPage() {
                   </div>
                 </div>
 
-                <Button onClick={handleCheckout} className="w-full honey-gradient text-white border-0 hover:opacity-90 text-lg py-3 mt-6">
-                  Continuar al pago
+                {!shipmentInfo && (
+                  <Button onClick={() => setShowShipping(true)} variant="outline"
+                    className="w-full border-amber-300 text-amber-700 hover:bg-amber-50">
+                    📦 Generar envío por Correo Argentino
+                  </Button>
+                )}
+
+                <Button onClick={handleCheckout} className="w-full honey-gradient text-white border-0 hover:opacity-90 text-lg py-3">
+                  Iniciar Compra
                 </Button>
 
                 <div className="text-center text-sm text-gray-500 mt-4">
@@ -283,5 +297,40 @@ export function CartPage() {
         </div>
       </div>
     </div>
+
+    {/* Modal de envío */}
+    <AnimatePresence>
+      {showShipping && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowShipping(false) }}
+        >
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between p-5 border-b">
+              <h2 className="font-semibold text-lg">Envío por Correo Argentino</h2>
+              <button onClick={() => setShowShipping(false)} className="p-1 hover:bg-gray-100 rounded">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-5">
+              <ShippingForm
+                cartItems={cartItems}
+                subtotal={subtotal}
+                onShipmentCreated={handleShipmentCreated}
+                onSkip={() => setShowShipping(false)}
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   </>;
 }

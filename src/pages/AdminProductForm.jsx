@@ -12,6 +12,7 @@ export default function AdminProductForm() {
     files: [],
     inStock: true,
     featured: false,
+    stockQuantity: '',
     rating: '4.9',
     reviews: '125',
     weight: '',
@@ -80,6 +81,7 @@ export default function AdminProductForm() {
         features,
         images, // URLs públicas
         in_stock: !!form.inStock,
+        stock_quantity: form.stockQuantity !== '' ? parseInt(form.stockQuantity, 10) : null,
         featured: !!form.featured,
         rating: form.rating ? Math.max(0, Math.min(5, Number(form.rating))) : 0,
         reviews: form.reviews ? parseInt(form.reviews, 10) : 0,
@@ -106,6 +108,7 @@ export default function AdminProductForm() {
         files: [],
         inStock: true,
         featured: false,
+        stockQuantity: '',
         rating: '4.9',
         reviews: '125',
         weight: '',
@@ -148,6 +151,7 @@ export default function AdminProductForm() {
             <option value="phoneholders">Porta celulares</option>
             <option value="fannypacks">Riñoneras</option>
             <option value="backpacks">Mochilas</option>
+            <option value="dresses">Vestidos</option>
             <option value="sets">Sets</option>
           </select>
         </div>
@@ -175,6 +179,11 @@ export default function AdminProductForm() {
                  className="w-full border p-2 rounded" placeholder="Rating (0–5)" />
           <input name="reviews" value={form.reviews} onChange={onChange} type="number" min="0" step="1"
                  className="w-full border p-2 rounded" placeholder="Reviews" />
+        </div>
+
+        <div>
+          <input name="stockQuantity" value={form.stockQuantity} onChange={onChange} type="number" min="0" step="1"
+                 className="w-full border p-2 rounded" placeholder="Cantidad en stock (ej. 50)" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-3">

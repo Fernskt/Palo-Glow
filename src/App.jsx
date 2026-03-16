@@ -8,6 +8,7 @@ import { HomePage } from '@/pages/HomePage'
 import { ShopPage } from '@/pages/ShopPage'
 import { ProductPage } from '@/pages/ProductPage'
 import { CartPage } from '@/pages/CartPage'
+import { CheckoutPage } from '@/pages/CheckoutPage'
 import AdminGuard from '@/admin/AdminGuard'
 import AdminLogin from '@/pages/AdminLogin'
 import AdminProductForm from '@/pages/AdminProductForm'
@@ -26,6 +27,7 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route
             path="/about"
             element={
