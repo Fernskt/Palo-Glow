@@ -14,7 +14,7 @@ import AdminLogin from '@/pages/AdminLogin'
 import AdminProductForm from '@/pages/AdminProductForm'
 import AdminProducts from '@/pages/AdminProducts'
 import AdminProductEdit from '@/pages/AdminProductEdit'
-import { Scroll } from 'lucide-react'
+import { AboutPage } from '@/pages/AboutPage'
 
 function App() {
   return (
@@ -28,14 +28,7 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route
-            path="/about"
-            element={
-              <div className="min-h-screen flex items-center justify-center">
-                <h1 className="text-2xl font-bold">Nosotros - En desarrollo!</h1>
-              </div>
-            }
-          />
+          <Route path="/about" element={<AboutPage />} />
           <Route
             path="/contact"
             element={
