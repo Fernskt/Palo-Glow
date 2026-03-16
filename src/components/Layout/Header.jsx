@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingCart, Menu, X, Search, Heart, User } from 'lucide-react'
@@ -12,6 +12,9 @@ import logo from '@/assets/paloGlowLogo1.png'
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [session, setSession] = useState(null)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const searchInputRef = useRef(null)
 
   const { getCartItemsCount } = useCart()
   const cartItemsCount = getCartItemsCount()
@@ -42,8 +45,29 @@ export function Header() {
     toast({ title: 'Lo estamos trabajando ❤️' })
   }
   const handleSearchClick = () => {
-    toast({ title: 'Lo estamos trabajando ❤️' })
+    setIsSearchOpen(prev => !prev)
+    setSearchQuery('')
   }
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    const q = searchQuery.trim()
+    if (q) {
+      navigate(`/shop?q=${encodeURIComponent(q)}`)
+      setIsSearchOpen(false)
+      setSearchQuery('')
+    }
+  }
+
+  useEffect(() => {
+    if (!isSearchOpen) return
+    const onKey = (e) => { if (e.key === 'Escape') setIsSearchOpen(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [isSearchOpen])
+
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) searchInputRef.current.focus()
+  }, [isSearchOpen])
 
   return (
     <header className="sticky top-0 z-50 glass-effect border-b">
@@ -78,13 +102,35 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
+            <AnimatePresence>
+              {isSearchOpen && (
+                <motion.form
+                  key="search-form"
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: 200, opacity: 1 }}
+                  exit={{ width: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  onSubmit={handleSearchSubmit}
+                  className="hidden sm:flex items-center bg-gray-100 rounded-full px-3 py-1 overflow-hidden"
+                >
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Buscar productos..."
+                    className="bg-transparent outline-none text-sm text-gray-700 w-full min-w-0"
+                  />
+                </motion.form>
+              )}
+            </AnimatePresence>
             <Button variant="ghost" size="icon" onClick={handleSearchClick} className="hidden sm:flex">
-              <Search className="h-5 w-5" />
+              {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
             </Button>
 
-            <Button variant="ghost" size="icon" onClick={handleWishlistClick} className="hidden sm:flex">
+            {/* <Button variant="ghost" size="icon" onClick={handleWishlistClick} className="hidden sm:flex">
               <Heart className="h-5 w-5" />
-            </Button>
+            </Button> */}
 
             {/* Cart */}
             <Link to="/cart">
@@ -180,15 +226,22 @@ export function Header() {
                   </Link>
                 ))}
 
-                <div className="flex items-center space-x-4 px-3 py-2">
-                  <Button variant="ghost" size="sm" onClick={handleSearchClick} className="flex items-center space-x-2">
-                    <Search className="h-4 w-4" />
-                    <span>Search</span>
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={handleWishlistClick} className="flex items-center space-x-2">
-                    <Heart className="h-4 w-4" />
-                    <span>Wishlist</span>
-                  </Button>
+                <div className="px-3 py-2">
+                  <form
+                    onSubmit={(e) => { handleSearchSubmit(e); setIsMenuOpen(false) }}
+                    className="flex items-center gap-2"
+                  >
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Buscar productos..."
+                      className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                    <Button type="submit" size="sm" className="bg-amber-500 hover:bg-amber-600 text-white shrink-0">
+                      <Search className="h-4 w-4" />
+                    </Button>
+                  </form>
                 </div>
 
                 {/* Admin en mobile */}
