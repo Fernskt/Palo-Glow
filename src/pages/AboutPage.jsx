@@ -102,7 +102,7 @@ export function AboutPage() {
                     </Button>
                   </Link>
                   <a
-                    href="https://wa.me/5491112345678"
+                    href="https://wa.me/5491132801394"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -374,7 +374,7 @@ export function AboutPage() {
                   </Button>
                 </Link>
                 <a
-                  href="https://wa.me/5491112345678"
+                  href="https://wa.me/5491132801394"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
