@@ -143,8 +143,8 @@ export function CartPage() {
             </div>
             <Link to="/shop">
               <Button variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-50">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Continuar comprando
+                <ArrowLeft className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Continuar comprando</span>
               </Button>
             </Link>
           </div>
@@ -175,54 +175,52 @@ export function CartPage() {
                     height: 0
                   }} transition={{
                     duration: 0.3
-                  }} className="p-6">
-                    <div className="flex items-center gap-4">
+                  }} className="p-4 sm:p-6">
+                    <div className="flex gap-3 sm:gap-4">
                       {/* Product Image */}
-                      <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                         <img className="w-full h-full object-cover" alt={`${item.name} in shopping cart`} src={getThumb(item)} />
                       </div>
 
-                      {/* Product Info */}
+                      {/* Product Content */}
                       <div className="flex-1 min-w-0">
-                        <Link to={`/product/${item.id}`} className="text-lg font-medium text-gray-900 hover:text-amber-600 transition-colors">
-                          {item.name}
-                        </Link>
-                        <p className="text-sm text-gray-600 mt-1">
-                          {item.weight} • {item.category}
-                        </p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className="text-lg font-semibold text-gray-900">
-                            ${item.price}
-                          </span>
-                          {!!getOrig(item) && (
-                            <span className="text-sm text-gray-500 line-through">
-                              ${Number(getOrig(item)).toFixed(2)}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Quantity Controls */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center border border-gray-300 rounded-lg">
-                          <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)} className="p-2 hover:bg-gray-100 transition-colors" disabled={item.quantity <= 1}>
-                            <Minus className="h-4 w-4" />
-                          </button>
-                          <input type="number" value={item.quantity} onChange={e => handleQuantityChange(item.id, parseInt(e.target.value) || 1)} className="w-16 text-center py-2 border-0 focus:outline-none quantity-input" min="1" />
-                          <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)} className="p-2 hover:bg-gray-100 transition-colors">
-                            <Plus className="h-4 w-4" />
+                        {/* Name + Remove */}
+                        <div className="flex items-start justify-between gap-1">
+                          <Link to={`/product/${item.id}`} className="text-sm sm:text-base font-medium text-gray-900 hover:text-amber-600 transition-colors leading-snug">
+                            {item.name}
+                          </Link>
+                          <button onClick={() => handleRemoveItem(item.id, item.name)} className="p-1.5 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0">
+                            <Trash2 className="h-4 w-4" />
                           </button>
                         </div>
 
-                        <button onClick={() => handleRemoveItem(item.id, item.name)} className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
+                        <p className="text-xs text-gray-500 mt-0.5">{item.weight} · {item.category}</p>
 
-                      {/* Item Total */}
-                      <div className="text-right min-w-0">
-                        <div className="text-lg font-semibold text-gray-900">
-                          ${(item.price * item.quantity).toFixed(2)}
+                        {/* Price + Qty + Total */}
+                        <div className="flex items-center justify-between mt-3 flex-wrap gap-y-2">
+                          {/* Unit price */}
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm font-semibold text-gray-900">${item.price}</span>
+                            {!!getOrig(item) && (
+                              <span className="text-xs text-gray-400 line-through">${Number(getOrig(item)).toFixed(2)}</span>
+                            )}
+                          </div>
+
+                          {/* Qty controls */}
+                          <div className="flex items-center border border-gray-300 rounded-lg">
+                            <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)} className="p-1.5 hover:bg-gray-100 transition-colors" disabled={item.quantity <= 1}>
+                              <Minus className="h-3.5 w-3.5" />
+                            </button>
+                            <input type="number" value={item.quantity} onChange={e => handleQuantityChange(item.id, parseInt(e.target.value) || 1)} className="w-10 text-center py-1 border-0 focus:outline-none text-sm quantity-input" min="1" />
+                            <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)} className="p-1.5 hover:bg-gray-100 transition-colors">
+                              <Plus className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+
+                          {/* Item total */}
+                          <div className="text-sm font-bold text-gray-900">
+                            ${(item.price * item.quantity).toFixed(2)}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -242,7 +240,7 @@ export function CartPage() {
               y: 0
             }} transition={{
               duration: 0.6
-            }} className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+            }} className="bg-white rounded-lg shadow-sm p-6 lg:sticky lg:top-8">
               <h2 className="text-lg font-semibold text-gray-900 mb-6">Resumen</h2>
 
               <div className="space-y-4">
