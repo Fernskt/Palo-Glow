@@ -9,6 +9,9 @@ import { ShopPage } from '@/pages/ShopPage'
 import { ProductPage } from '@/pages/ProductPage'
 import { CartPage } from '@/pages/CartPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
+import { CheckoutSuccess } from '@/pages/CheckoutSuccess'
+import { CheckoutFailure } from '@/pages/CheckoutFailure'
+import { CheckoutPending } from '@/pages/CheckoutPending'
 import AdminGuard from '@/admin/AdminGuard'
 import AdminLogin from '@/pages/AdminLogin'
 import AdminProductForm from '@/pages/AdminProductForm'
@@ -28,6 +31,9 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/checkout/failure" element={<CheckoutFailure />} />
+          <Route path="/checkout/pending" element={<CheckoutPending />} />
           <Route path="/about" element={<AboutPage />} />
           <Route
             path="/contact"
@@ -57,7 +63,7 @@ function App() {
 
       {/* Floating WhatsApp button */}
       <a
-        href="https://wa.me/5491132801394"
+        href="https://wa.me/5491132801394?text=Hola%2C%20Palo%20quiero%20hacerte%20una%20consulta"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"

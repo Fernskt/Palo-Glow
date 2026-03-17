@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { CreditCard, Banknote, Building2, Smartphone, CheckCircle, ShoppingBag } from 'lucide-react'
+import { CreditCard, Banknote, Building2, Smartphone, CheckCircle, ShoppingBag, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { buildCartMessage, buildWhatsAppUrl, formatARS } from '@/lib/whatsapp'
 import { decrementStock } from '@/services/products'
+import { createMercadoPagoPreference } from '@/services/payments'
 
 const PAYMENT_METHODS = [
   {
@@ -52,16 +53,43 @@ export function CheckoutPage() {
 
   const [selectedPayment, setSelectedPayment] = useState('card')
   const [loading, setLoading] = useState(false)
+  const [payError, setPayError] = useState(null)
 
   const destinatario = shipmentInfo?.destinatario ?? null
   const trackingCode = shipmentInfo?.codigoSeguimiento ?? shipmentInfo?.numeroEnvio ?? null
 
   const handlePay = async () => {
     setLoading(true)
+    setPayError(null)
+
     try {
       await decrementStock(cartItems.map(i => ({ id: i.id, quantity: i.quantity })))
     } catch (err) {
       console.error('Stock update error:', err)
+    }
+
+    if (selectedPayment === 'mercadopago') {
+      try {
+        const preference = await createMercadoPagoPreference({
+          cartItems,
+          shipmentInfo,
+          subtotal,
+          costoEnvio,
+          total,
+          customer: {
+            email: destinatario?.email ?? undefined,
+            name: destinatario?.nombre ?? undefined,
+            surname: destinatario?.apellido ?? undefined,
+          },
+          paymentMethod: 'mercadopago',
+        })
+        window.location.href = preference.init_point
+      } catch (err) {
+        console.error('MercadoPago error:', err)
+        setPayError('No se pudo iniciar el pago con Mercado Pago. Intentá de nuevo.')
+        setLoading(false)
+      }
+      return
     }
 
     const items = cartItems.map(ci => ({ name: ci.name, quantity: ci.quantity, price: ci.price }))
@@ -184,8 +212,19 @@ export function CheckoutPage() {
                   disabled={loading}
                   className="w-full honey-gradient text-white border-0 hover:opacity-90 text-base py-6 mt-6 rounded-xl"
                 >
-                  {loading ? 'Procesando…' : 'Realizar el pago'}
+                  {loading
+                    ? 'Procesando…'
+                    : selectedPayment === 'mercadopago'
+                      ? 'Pagar con Mercado Pago'
+                      : 'Realizar el pago'}
                 </Button>
+
+                {payError && (
+                  <div className="mt-4 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                    <AlertCircle className="mt-0.5 w-4 h-4 flex-shrink-0" />
+                    <span>{payError}</span>
+                  </div>
+                )}
               </div>
             </div>
 

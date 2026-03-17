@@ -69,6 +69,7 @@ export function useCatalog({ category = 'all' } = {}) {
       'fannypacks',
       'backpacks',
       'dresses',
+      'relojes',
     ]
     const counts = Object.fromEntries(
       cats.map(c => [c, c === 'all' ? products.length : products.filter(p => p.category === c).length])
@@ -85,7 +86,8 @@ export function useCatalog({ category = 'all' } = {}) {
       { id: 'phoneholders', name: 'Porta celulares', count: counts.phoneholders },
       { id: 'fannypacks', name: 'Riñoneras', count: counts.fannypacks },
       { id: 'backpacks', name: 'Mochilas', count: counts.backpacks },
-      { id: 'dresses', name: 'Vestidos', count: counts.dresses }
+      { id: 'dresses', name: 'Vestidos', count: counts.dresses },
+      { id: 'relojes', name: 'Relojes', count: counts.relojes }
     ]
   }, [products])
 

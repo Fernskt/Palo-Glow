@@ -153,6 +153,7 @@ export default function AdminProductForm() {
             <option value="backpacks">Mochilas</option>
             <option value="dresses">Vestidos</option>
             <option value="sets">Sets</option>
+            <option value="relojes">Relojes</option>
           </select>
         </div>
 
