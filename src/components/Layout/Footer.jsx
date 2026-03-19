@@ -25,7 +25,7 @@ export function Footer() {
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     toast({
-      title: "Lo estamos trabajando ❤️"
+      title: "Gracias por suscribirte a nuestro newsletter! ❤️"
     });
   };
 
@@ -90,12 +90,12 @@ export function Footer() {
               <Link to="/shop" className="text-gray-300 hover:text-amber-400 transition-colors text-sm">
                 Tienda
               </Link>
-              <Link to="/about" className="text-gray-300 hover:text-amber-400 transition-colors text-sm">
+              {/* <Link to="/about" className="text-gray-300 hover:text-amber-400 transition-colors text-sm">
                 Nosotros
               </Link>
               <Link to="/contact" className="text-gray-300 hover:text-amber-400 transition-colors text-sm">
                 Contacto
-              </Link>
+              </Link> */}
             </nav>
           </div>
 

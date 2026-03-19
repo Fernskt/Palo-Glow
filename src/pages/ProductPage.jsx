@@ -72,8 +72,8 @@ export function ProductPage() {
   const handleAddToCart = () => {
     addToCart(product, quantity);
     toast({
-      title: "Added to cart!",
-      description: `${quantity} x ${product.name} added to your cart.`
+      title: "Añadido al carrito!",
+      description: `${quantity} x ${product.name} fue añadido al carrito.`
     });
   };
 
@@ -247,6 +247,15 @@ export function ProductPage() {
                     {product.weight}
                   </span>
                 </div>
+                {product.stockQuantity != null && (
+                  <p className={`text-sm font-medium mb-2 ${product.stockQuantity === 0 ? 'text-red-500' : product.stockQuantity <= 5 ? 'text-red-500' : 'text-green-600'}`}>
+                    {product.stockQuantity === 0
+                      ? 'Sin stock'
+                      : product.stockQuantity <= 5
+                        ? `¡Solo quedan ${product.stockQuantity} unidades!`
+                        : `${product.stockQuantity} unidades disponibles`}
+                  </p>
+                )}
               </div>
 
               {/* Description */}

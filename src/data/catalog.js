@@ -12,6 +12,7 @@ function mapRow(p) {
     features: Array.isArray(p.features) ? p.features : [],
     images: Array.isArray(p.images) ? p.images : [],
     inStock: !!p.in_stock,
+    stockQuantity: p.stock_quantity ?? null,
     featured: !!p.featured,
     rating: typeof p.rating === 'number' ? p.rating : 0,
     reviews: typeof p.reviews === 'number' ? p.reviews : 0,
@@ -62,8 +63,13 @@ export function useCatalog({ category = 'all' } = {}) {
       'bracelets',
       'rings',
       'earrings',
-      'piercing',
-      'sets'
+      'briefcases',
+      'wallets',
+      'phoneholders',
+      'fannypacks',
+      'backpacks',
+      'dresses',
+      'relojes',
     ]
     const counts = Object.fromEntries(
       cats.map(c => [c, c === 'all' ? products.length : products.filter(p => p.category === c).length])
@@ -75,8 +81,13 @@ export function useCatalog({ category = 'all' } = {}) {
       { id: 'bracelets', name: 'Pulseras', count: counts.bracelets },
       { id: 'rings', name: 'Anillos', count: counts.rings },
       { id: 'earrings', name: 'Aros', count: counts.earrings },
-      { id: 'piercing', name: 'Piercing', count: counts.piercing },
-      { id: 'sets', name: 'Sets', count: counts.sets },
+      { id: 'briefcases', name: 'Carteras', count: counts.briefcases },
+      { id: 'wallets', name: 'Billeteras', count: counts.wallets },
+      { id: 'phoneholders', name: 'Porta celulares', count: counts.phoneholders },
+      { id: 'fannypacks', name: 'Riñoneras', count: counts.fannypacks },
+      { id: 'backpacks', name: 'Mochilas', count: counts.backpacks },
+      { id: 'dresses', name: 'Vestidos', count: counts.dresses },
+      { id: 'relojes', name: 'Relojes', count: counts.relojes }
     ]
   }, [products])
 

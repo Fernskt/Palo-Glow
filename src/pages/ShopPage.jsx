@@ -1,34 +1,86 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { motion } from 'framer-motion';
-import { Filter, Grid, List, SlidersHorizontal } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Filter, Grid, List, SlidersHorizontal, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ProductCard';
 //import { products, categories } from '@/data/products';
 import { useCatalog } from '@/data/catalog'
 import { toast } from '@/components/ui/use-toast';
+import { useLocation } from 'react-router-dom';
+
 
 export function ShopPage() {
   const { products, categories, featuredProducts, loading, error } = useCatalog();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid');
-  const [priceRange, setPriceRange] = useState([0, 20000]);
+  const [priceRange, setPriceRange] = useState([0, 50000]);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const PAGE_SIZE = 6
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // 1) Hooks de URL
+  const location = useLocation();
+  const isDiaDeLaMadre = useMemo(() => {
+    const sp = new URLSearchParams(location.search);
+    return sp.has('esDiaDeLaMadre');
+  }, [location.search]);
+
+  const searchQuery = useMemo(() => {
+    const sp = new URLSearchParams(location.search);
+    return (sp.get('q') || '').trim().toLowerCase();
+  }, [location.search]);
+
+  // 2) Aplicar precios con promo (20% OFF) si corresponde
+  const pricedProducts = useMemo(() => {
+    if (!Array.isArray(products)) return [];
+    if (!isDiaDeLaMadre) return products;
+
+    return products.map(p => {
+      const orig = Number(p.price || 0);
+      const promo = Math.max(0, Math.round(orig * 0.8)); // 20% OFF
+      return {
+        ...p,
+        originalPrice: p.originalPrice ?? orig,
+        price: promo,
+        original_price: p.original_price ?? p.originalPrice ?? orig,
+      };
+    });
+  }, [products, isDiaDeLaMadre]);
+
+
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [products, selectedCategory, sortBy, priceRange])
+  }, [pricedProducts, selectedCategory, sortBy, priceRange, searchQuery])
 
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = Array.isArray(products) ? [...products] : [];
+    let filtered = Array.isArray(pricedProducts) ? [...pricedProducts] : [];
 
 
     // Filter by category
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(product => product.category === selectedCategory);
+    }
+
+    // Filter by search query (name, description, category id or category display name)
+    if (searchQuery) {
+      const categoryNameMap = Object.fromEntries(
+        categories.map(c => [c.name.toLowerCase(), c.id])
+      )
+      // Find category ids whose display name matches the query
+      const matchedCategoryIds = Object.entries(categoryNameMap)
+        .filter(([name]) => name.includes(searchQuery))
+        .map(([, id]) => id)
+
+      filtered = filtered.filter(product =>
+        product.name?.toLowerCase().includes(searchQuery) ||
+        product.description?.toLowerCase().includes(searchQuery) ||
+        product.category?.toLowerCase().includes(searchQuery) ||
+        matchedCategoryIds.includes(product.category)
+      );
     }
 
     // Filter by price range
@@ -58,7 +110,7 @@ export function ShopPage() {
     }
 
     return filtered;
-  }, [products, selectedCategory, sortBy, priceRange]);
+  }, [products, categories, selectedCategory, sortBy, priceRange, searchQuery]);
 
   const total = filteredAndSortedProducts.length
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
@@ -67,28 +119,60 @@ export function ShopPage() {
   const paginatedProducts = filteredAndSortedProducts.slice(start, end)
 
 
-  const handleFilterClick = () => {
-    toast({
-      title: "Lo estamos trabajando ❤️"
-    });
-  };
-
   return (
     <>
       <Helmet>
-        <title>Palo Glow | Nuestros Productos</title>
-        <meta name="description" content="Joyas para elevar tus outfits: collares, pulseras, anillos y aros hipoalergénicos en acero 316L bañados en oro 18k." />
-        <link rel="canonical" href="https://fernskt.github.io/Palo-Glow/" />
+        {/* Title */}
+        <title>Palo Glow | Tienda de Joyas y Accesorios</title>
+
+        {/* Meta Description */}
+        <meta
+          name="description"
+          content="Explorá la tienda oficial Palo Glow: joyas hipoalergénicas en acero quirúrgico 316L con pulido espejo, brillo duradero y accesorios como bolsos, carteras y riñoneras de eco-cuero."
+        />
+
+        {/* Canonical */}
+        <link rel="canonical" href="https://paloglow.shop/shop" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Palo Glow | Tienda Online" />
+        <meta
+          property="og:description"
+          content="Descubrí collares, anillos, aros y pulseras en acero quirúrgico 316L y accesorios en eco-cuero. Calidad real, brillo duradero y diseños modernos."
+        />
+        <meta property="og:url" content="https://paloglow.shop/shop" />
+        <meta property="og:image" content="https://paloglow.shop/og-cover.jpg" />
+
+        {/* JSON-LD Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Organization",
+            "@type": "Store",
             name: "Palo Glow",
-            url: "https://fernskt.github.io/Palo-Glow/",
-            sameAs: ["https://www.instagram.com/paloglow"]
+            url: "https://paloglow.shop/shop",
+            image: "https://paloglow.shop/og-cover.jpg",
+            description:
+              "Tienda oficial Palo Glow: joyas hipoalergénicas en acero quirúrgico 316L con pulido espejo, brillo duradero y accesorios en eco-cuero.",
+            sameAs: ["https://www.instagram.com/paloglow"],
+            department: [
+              {
+                "@type": "DepartmentStore",
+                name: "Joyas de acero 316L",
+                description:
+                  "Collares, anillos, aros y pulseras hipoalergénicos en acero quirúrgico 316L, con terminación pulido espejo y apliques de strass de alta calidad."
+              },
+              {
+                "@type": "DepartmentStore",
+                name: "Accesorios en eco-cuero",
+                description:
+                  "Bolsos, carteras y riñoneras modernas fabricadas en eco-cuero resistente y de excelente terminación."
+              }
+            ]
           })}
         </script>
       </Helmet>
+
 
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
@@ -117,10 +201,94 @@ export function ShopPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:w-64 space-y-6"
+              className="lg:w-64 space-y-4"
             >
+              {/* Mobile toggle button — only visible below lg */}
+              <button
+                className="lg:hidden w-full flex items-center justify-between px-4 py-3 bg-white rounded-lg shadow-sm font-semibold text-gray-900"
+                onClick={() => setIsFiltersOpen(prev => !prev)}
+              >
+                <span className="flex items-center gap-2">
+                  <Filter className="h-4 w-4" />
+                  Filtros
+                </span>
+                {isFiltersOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              </button>
+
+              {/* Filter panels — always visible on desktop, collapsible on mobile */}
+              <AnimatePresence initial={false}>
+                {isFiltersOpen && (
+                  <motion.div
+                    key="mobile-filters"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="lg:hidden space-y-4 overflow-hidden"
+                  >
+                    {/* Categories */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm">
+                      <h3 className="font-semibold text-gray-900 mb-4">Categorías</h3>
+                      <div className="space-y-2">
+                        {categories.map((category) => (
+                          <button
+                            key={category.id}
+                            onClick={() => setSelectedCategory(category.id)}
+                            className={`w-full text-left px-3 py-2 rounded-md transition-colors ${selectedCategory === category.id
+                              ? 'bg-amber-100 text-amber-800'
+                              : 'text-gray-600 hover:bg-gray-100'
+                              }`}
+                          >
+                            <div className="flex justify-between items-center">
+                              <span>{category.name}</span>
+                              <span className="text-sm text-gray-400">({category.count})</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price Range */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm">
+                      <h3 className="font-semibold text-gray-900 mb-4">Rango de precio</h3>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between text-sm text-gray-600">
+                          <span>${priceRange[0]}</span>
+                          <span>${priceRange[1]}</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="0"
+                          max="50000"
+                          value={priceRange[1]}
+                          onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                        />
+                        <div className="flex gap-2">
+                          <input
+                            type="number"
+                            value={priceRange[0]}
+                            onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Min"
+                          />
+                          <input
+                            type="number"
+                            value={priceRange[1]}
+                            onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 20000])}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                            placeholder="Max"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Desktop: always visible */}
               {/* Categories */}
-              <div className="bg-white rounded-lg p-6 shadow-sm">
+              <div className="hidden lg:block bg-white rounded-lg p-6 shadow-sm">
                 <h3 className="font-semibold text-gray-900 mb-4">Categorías</h3>
                 <div className="space-y-2">
                   {categories.map((category) => (
@@ -142,7 +310,7 @@ export function ShopPage() {
               </div>
 
               {/* Price Range */}
-              <div className="bg-white rounded-lg p-6 shadow-sm">
+              <div className="hidden lg:block bg-white rounded-lg p-6 shadow-sm">
                 <h3 className="font-semibold text-gray-900 mb-4">Rango de precio</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between text-sm text-gray-600">
@@ -152,7 +320,7 @@ export function ShopPage() {
                   <input
                     type="range"
                     min="0"
-                    max="20000"
+                    max="50000"
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
@@ -175,18 +343,6 @@ export function ShopPage() {
                   </div>
                 </div>
               </div>
-
-              {/* Additional Filters */}
-              {/* <div className="bg-white rounded-lg p-6 shadow-sm">
-                <Button
-                  onClick={handleFilterClick}
-                  variant="outline"
-                  className="w-full"
-                >
-                  <SlidersHorizontal className="h-4 w-4 mr-2" />
-                  Más Filtros
-                </Button>
-              </div> */}
             </motion.div>
 
             {/* Main Content */}
@@ -203,7 +359,11 @@ export function ShopPage() {
                     <span className="text-sm text-gray-600">
                       Mostrando {total ? `${start + 1}–${end}` : 0} de {total} productos
                     </span>
-
+                    {searchQuery && (
+                      <span className="text-sm text-amber-700 font-medium">
+                        Resultados para: &quot;{searchQuery}&quot;
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-4">
@@ -296,7 +456,7 @@ export function ShopPage() {
                   </button>
 
                   {/* Números (simple: todas las páginas) */}
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+                  {Array.from({ length: 5 }, (_, i) => i + 1).map(n => (
                     <button
                       key={n}
                       onClick={() => setCurrentPage(n)}

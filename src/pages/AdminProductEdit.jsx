@@ -21,6 +21,7 @@ export default function AdminProductEdit() {
     files: [],
     inStock: true,
     featured: false,
+    stockQuantity: '',
     rating: '0',
     reviews: '0',
     weight: '',
@@ -83,6 +84,7 @@ export default function AdminProductEdit() {
         files: [],
         inStock: !!data.in_stock,
         featured: !!data.featured,
+        stockQuantity: data.stock_quantity != null ? String(data.stock_quantity) : '',
         rating: String(data.rating ?? '0'),
         reviews: String(data.reviews ?? '0'),
         weight: data.weight || '',
@@ -122,6 +124,7 @@ export default function AdminProductEdit() {
         features,
         images: finalImages,
         in_stock: !!form.inStock,
+        stock_quantity: form.stockQuantity !== '' ? parseInt(form.stockQuantity, 10) : null,
         featured: !!form.featured,
         rating: form.rating ? Math.max(0, Math.min(5, Number(form.rating))) : 0,
         reviews: form.reviews ? parseInt(form.reviews, 10) : 0,
@@ -174,7 +177,15 @@ export default function AdminProductEdit() {
             <option value="rings">Anillos</option>
             <option value="earrings">Aros</option>
             <option value="necklaces">Collares</option>
+            <option value="piercing">Piercing</option>
+            <option value="briefcases">Carteras</option>
+            <option value="wallets">Billeteras</option>
+            <option value="phoneholders">Porta celulares</option>
+            <option value="fannypacks">Riñoneras</option>
+            <option value="backpacks">Mochilas</option>
             <option value="sets">Sets</option>
+            <option value="dresses">Vestidos</option>
+            <option value="relojes">Relojes</option>
           </select>
         </div>
 
@@ -201,6 +212,11 @@ export default function AdminProductEdit() {
                  className="w-full border p-2 rounded" placeholder="Rating (0–5)" />
           <input name="reviews" value={form.reviews} onChange={onChange} type="number" min="0" step="1"
                  className="w-full border p-2 rounded" placeholder="Reviews" />
+        </div>
+
+        <div>
+          <input name="stockQuantity" value={form.stockQuantity} onChange={onChange} type="number" min="0" step="1"
+                 className="w-full border p-2 rounded" placeholder="Cantidad en stock (ej. 50)" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-3">
